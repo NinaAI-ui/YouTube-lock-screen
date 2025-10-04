@@ -15,7 +15,7 @@ function updateBackground() {
     const hour = parseInt(hourString.substring(0, 2), 10);
     
     const body = document.body;
-    const fancyNightSky = document.getElementById('fancy-night-sky'); // NOVO ELEMENTO
+    const fancyNightSky = document.getElementById('fancy-night-sky'); 
     const timeDisplay = document.getElementById('current-time');
 
     if (timeDisplay) {
@@ -102,23 +102,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // -----------------------------------------------------
-// LÓGICA DE GERAÇÃO DE ESTRELAS SIMPLES
+// LÓGICA DE GERAÇÃO DE ESTRELAS COM MOVIMENTO E GLOW
 // -----------------------------------------------------
 const starsContainer = document.getElementById('stars-container');
 
 function generateStars() {
     if (!starsContainer) return;
-    const starCount = 100;
+    const starCount = 120; // Mais estrelas!
     let starsHTML = '';
 
     for (let i = 0; i < starCount; i++) {
         const x = Math.random() * 100;
         const y = Math.random() * 100;
-        const size = Math.random() * 1.5 + 0.5;
+        const size = Math.random() * 2 + 0.8; // Estrelas um pouco maiores
         const delay = Math.random() * 5;
-        const duration = Math.random() * 3 + 2;
+        const duration = Math.random() * 4 + 4; // Movimento mais lento
 
-        // Cria uma estrela simples com um pequeno efeito de brilho e animação
+        // Adicionando animação de flutuação e brilho (glow)
         starsHTML += `
             <div style="
                 position: absolute;
@@ -128,9 +128,13 @@ function generateStars() {
                 height: ${size}px;
                 background-color: white;
                 border-radius: 50%;
-                box-shadow: 0 0 ${size * 2}px rgba(255, 255, 255, 0.8);
-                opacity: 0.8;
-                animation: twinkle ${duration}s ease-in-out infinite alternate;
+                /* Glow aumentado */
+                box-shadow: 0 0 ${size * 3}px rgba(255, 255, 255, 1.0);
+                opacity: 0.9;
+                /* Animações combinadas */
+                animation: 
+                    twinkle ${Math.random() * 2 + 1}s ease-in-out infinite alternate, 
+                    starFloat ${duration}s ease-in-out infinite alternate;
                 animation-delay: ${delay}s;
             "></div>
         `;
@@ -138,12 +142,19 @@ function generateStars() {
     starsContainer.innerHTML = starsHTML;
 }
 
-// Define a animação 'twinkle' (Brilho das estrelas) globalmente
+// Define as animações 'twinkle' e 'starFloat' globalmente
 const styleSheet = document.createElement('style');
 styleSheet.innerHTML = `
     @keyframes twinkle {
-        0% { opacity: 0.3; transform: scale(1); }
-        100% { opacity: 1; transform: scale(1.2); }
+        0% { opacity: 0.3; }
+        100% { opacity: 1; }
+    }
+    @keyframes starFloat {
+        0% { transform: translate(0px, 0px); }
+        25% { transform: translate(1px, 2px); }
+        50% { transform: translate(-1px, 1px); }
+        75% { transform: translate(2px, -1px); }
+        100% { transform: translate(0px, 0px); }
     }
 `;
 document.head.appendChild(styleSheet);

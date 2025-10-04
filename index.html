@@ -44,7 +44,7 @@
         }
 
         /* ----------------------------------------------------- */
-        /* ESTILOS DO CONTEÚDO (Mantidos) */
+        /* ESTILOS DO CONTEÚDO */
         /* ----------------------------------------------------- */
         
         /* Container de Partículas (Fundo Interativo - APENAS NOITE) */
@@ -54,8 +54,20 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            z-index: 1; /* Fica no fundo */
         }
+        
+        /* Container Principal do Bloqueio (Acima das partículas) */
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+            z-index: 5; /* Fica na frente */
+        }
+
 
         /* Cartão de Bloqueio (O CARD ESCURO) */
         .block-card {
@@ -153,15 +165,6 @@
         }
 
         /* Utilitários e Margens */
-        .main-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            position: relative;
-            z-index: 5;
-        }
         .mb-8 { margin-bottom: 2rem; }
         .mb-4 { margin-bottom: 1rem; }
         .mb-2 { margin-bottom: 0.5rem; }
@@ -364,7 +367,8 @@
 
                 draw() {
                     ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.y, 0, Math.PI * 2, false);
+                    // 🔴 CORREÇÃO APLICADA: Usando this.radius para o tamanho da bolinha
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false); 
                     ctx.fillStyle = this.color;
                     ctx.globalAlpha = this.opacity;
                     ctx.fill();

@@ -28,7 +28,7 @@
             background-color: rgba(30, 30, 30, 0.98); 
             border-radius: 0.75rem; 
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7); 
-            padding: 2.5rem; 
+            padding: 2.5rem; /* Padding uniforme */
             max-width: 28rem; 
             width: 90%;
             text-align: center;
@@ -49,19 +49,27 @@
             justify-content: center;
             margin: 0 auto 1.5rem;
         }
-        /* CORREÇÃO DO ÍCONE CORTADO: Ajustamos o padding da div para garantir espaço */
+        
+        /* CORREÇÃO DO ÍCONE CORTADO */
         .icon-youtube-box {
-            width: 2rem; height: 2rem;
+            /* Definimos um tamanho fixo para o container do ícone */
+            width: 2.5rem; 
+            height: 1.7rem; 
             background-color: #ef4444; 
             border-radius: 0.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 0.5rem;
-            padding: 0.1rem; /* Pequeno padding para garantir que o SVG não encoste na borda */
+        }
+        .icon-youtube-box svg {
+            /* Garantimos que o SVG preencha o box sem ser cortado */
+            width: 1.5rem; 
+            height: 1.5rem;
         }
 
-        /* Inputs e Botão (Mantidos) */
+
+        /* Inputs e Botão */
         .input-style {
             width: 100%;
             padding: 0.75rem 1rem;
@@ -70,7 +78,7 @@
             background-color: #2c2c2c; 
             color: #fff;
             outline: none;
-            transition: all 0.2s;
+            box-sizing: border-box; /* Garante que o padding não aumente a largura total */
         }
         .button-submit {
             width: 100%;
@@ -163,147 +171,5 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('block-form');
-            const passwordInput = document.getElementById('password');
-            const errorContainer = document.getElementById('error-message-container');
-            const attemptsContainer = document.getElementById('attempts-container');
-            const CORRECT_PASSWORD = 'YTULA';
-            const STORAGE_KEY = 'youtube_block_unlocked';
-            let attempts = 0;
-
-            const updateAttempts = () => {
-                if (attempts > 0) {
-                    attemptsContainer.innerHTML = `
-                        <div class="mt-4 text-center">
-                            <p class="text-sm text-gray-400">
-                                Tentativas: <span class="font-semibold text-red-600">${attempts}</span>
-                            </p>
-                        </div>
-                    `;
-                } else {
-                    attemptsContainer.innerHTML = '';
-                }
-            };
-
-            const displayError = (message) => {
-                errorContainer.innerHTML = `
-                    <div class="error-message">
-                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                        </svg>
-                        ${message}
-                    </div>
-                `;
-            };
-
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const password = passwordInput.value;
-
-                if (password === CORRECT_PASSWORD) {
-                    localStorage.setItem(STORAGE_KEY, 'true');
-                    window.location.replace('https://www.youtube.com/');
-                } else {
-                    attempts++;
-                    passwordInput.value = ''; 
-                    displayError('Senha incorreta. Tente novamente.');
-                    updateAttempts();
-                }
-            });
-        });
-    </script>
-
-    <script>
-        function initializeParticles(id) {
-            const canvas = document.createElement('canvas');
-            canvas.style.position = 'absolute';
-            canvas.style.top = '0';
-            canvas.style.left = '0';
-            canvas.style.width = '100%';
-            canvas.style.height = '100%';
-            canvas.style.zIndex = '0';
-            document.getElementById(id).appendChild(canvas);
-            
-            const ctx = canvas.getContext('2d');
-            let particles = [];
-            const particleCount = 20; // REDUZIMOS a contagem para aumentar o impacto visual das bolas restantes
-            const colors = ['#f87171', '#93c5fd', '#a78bfa', '#fde047', '#4ade80']; 
-
-            function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.radius = Math.random() * 10 + 8; 
-                    this.color = colors[Math.floor(Math.random() * colors.length)];
-                    this.velocity = {
-                        x: (Math.random() - 0.5) * 0.2, 
-                        y: (Math.random() - 0.5) * 0.2 
-                    };
-                    this.opacity = 0.6; 
-                }
-
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-                    ctx.fillStyle = this.color;
-                    ctx.globalAlpha = this.opacity;
-                    
-                    // BRILHO EXTREMO: Tenta garantir que o brilho seja renderizado
-                    ctx.shadowColor = this.color; 
-                    ctx.shadowBlur = this.radius * 7; // AUMENTAMOS um pouco mais o brilho (7x o raio)
-
-                    ctx.fill();
-                }
-
-                update() {
-                    // Mover
-                    this.x += this.velocity.x;
-                    this.y += this.velocity.y;
-
-                    // Manter dentro da tela
-                    if (this.x - this.radius < 0 || this.x + this.radius > canvas.width) this.velocity.x *= -1;
-                    if (this.y - this.radius < 0 || this.y + this.radius > canvas.height) this.velocity.y *= -1;
-
-                    this.draw();
-                }
-            }
-
-            function init() {
-                particles = [];
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push(new Particle());
-                }
-            }
-
-            function animate() {
-                requestAnimationFrame(animate);
-                
-                // Limpeza SUAVE (rastro de luz): Aumentamos a opacidade de limpeza para 0.1
-                // Isso permite que o brilho se acumule mais rápido no fundo
-                ctx.fillStyle = 'rgba(13, 13, 13, 0.1)'; 
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                particles.forEach(particle => {
-                    particle.update();
-                });
-            }
-
-            window.addEventListener('resize', resize);
-            resize();
-            init();
-            animate();
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeParticles('particles-js');
-        });
-    </script>
-</body>
+    </body>
 </html>

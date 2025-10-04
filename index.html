@@ -11,9 +11,9 @@
             margin: 0;
             padding: 0;
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-            background-color: #1a1a1a; /* Fundo escuro geral */
-            color: #e0e0e0; /* Texto claro padrão */
-            overflow: hidden; /* Esconde barras de rolagem desnecessárias por causa das partículas */
+            background-color: #1a1a1a; 
+            color: #e0e0e0; 
+            overflow: hidden; 
         }
 
         /* Container de Partículas (Fundo Interativo) */
@@ -66,7 +66,7 @@
             margin: 0 auto 1rem;
         }
         
-        /* 🔴 CORREÇÃO DO ÍCONE: Voltando ao tamanho de quadrado */
+        /* 🔴 Foco na correção: Garante o tamanho do quadrado arredondado */
         .icon-youtube-box {
             width: 2rem; 
             height: 2rem; 
@@ -76,6 +76,8 @@
             align-items: center;
             justify-content: center;
             margin-right: 0.5rem;
+            /* Garante que o conteúdo interno (SVG) não ultrapasse a caixa */
+            overflow: hidden; 
         }
 
         /* Inputs e Botão (Alinhados) */

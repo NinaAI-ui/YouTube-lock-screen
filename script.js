@@ -102,63 +102,51 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // -----------------------------------------------------
-// LÓGICA DE GERAÇÃO DE ESTRELAS COM MOVIMENTO E GLOW
+// LÓGICA DE GERAÇÃO E ANIMAÇÃO DE ESTRELAS
 // -----------------------------------------------------
 const starsContainer = document.getElementById('stars-container');
 
-function generateStars() {
+function generateAnimatedStars() {
     if (!starsContainer) return;
-    const starCount = 120; // Mais estrelas!
-    let starsHTML = '';
-
+    starsContainer.innerHTML = ''; // Limpa estrelas antigas, se houver
+    const starCount = 150; // Aumentei para mais estrelas
+    
     for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+
+        const size = Math.random() * 2 + 1; // Tamanho entre 1px e 3px
         const x = Math.random() * 100;
         const y = Math.random() * 100;
-        const size = Math.random() * 2 + 0.8; // Estrelas um pouco maiores
-        const delay = Math.random() * 5;
-        const duration = Math.random() * 4 + 4; // Movimento mais lento
 
-        // Adicionando animação de flutuação e brilho (glow)
-        starsHTML += `
-            <div style="
-                position: absolute;
-                left: ${x}%;
-                top: ${y}%;
-                width: ${size}px;
-                height: ${size}px;
-                background-color: white;
-                border-radius: 50%;
-                /* Glow aumentado */
-                box-shadow: 0 0 ${size * 3}px rgba(255, 255, 255, 1.0);
-                opacity: 0.9;
-                /* Animações combinadas */
-                animation: 
-                    twinkle ${Math.random() * 2 + 1}s ease-in-out infinite alternate, 
-                    starFloat ${duration}s ease-in-out infinite alternate;
-                animation-delay: ${delay}s;
-            "></div>
+        // Propriedades para movimento
+        const dx = (Math.random() - 0.5) * 50; // Movimento horizontal de -25% a 25%
+        const dy = (Math.random() - 0.5) * 50; // Movimento vertical de -25% a 25%
+        const durationMovement = Math.random() * 30 + 20; // Duração do movimento (20-50s)
+        const delayMovement = Math.random() * 10; // Atraso para o início do movimento
+
+        // Propriedades para brilho (twinkle)
+        const durationTwinkle = Math.random() * 4 + 2; // Duração do brilho (2-6s)
+        const delayTwinkle = Math.random() * 5; // Atraso para o brilho
+
+        star.style.cssText = `
+            left: ${x}vw; /* Usar vw/vh para cobrir a tela */
+            top: ${y}vh;
+            width: ${size}px;
+            height: ${size}px;
+            /* Variáveis CSS para o movimento */
+            --dx: ${dx}vw; 
+            --dy: ${dy}vh;
+            /* Animações */
+            animation-duration: ${durationMovement}s, ${durationTwinkle}s;
+            animation-delay: ${delayMovement}s, ${delayTwinkle}s;
         `;
+        starsContainer.appendChild(star);
     }
-    starsContainer.innerHTML = starsHTML;
 }
 
-// Define as animações 'twinkle' e 'starFloat' globalmente
-const styleSheet = document.createElement('style');
-styleSheet.innerHTML = `
-    @keyframes twinkle {
-        0% { opacity: 0.3; }
-        100% { opacity: 1; }
-    }
-    @keyframes starFloat {
-        0% { transform: translate(0px, 0px); }
-        25% { transform: translate(1px, 2px); }
-        50% { transform: translate(-1px, 1px); }
-        75% { transform: translate(2px, -1px); }
-        100% { transform: translate(0px, 0px); }
-    }
-`;
-document.head.appendChild(styleSheet);
+// Inicializa as estrelas animadas no carregamento
+document.addEventListener('DOMContentLoaded', generateAnimatedStars);
 
-
-// Inicializa as estrelas no carregamento
-document.addEventListener('DOMContentLoaded', generateStars);
+// Garante que as estrelas sejam regeneradas se o tamanho da tela mudar
+window.addEventListener('resize', generateAnimatedStars);

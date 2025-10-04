@@ -6,39 +6,58 @@
     <title>ACESSO BLOQUEADO - YouTube</title>
     
     <style>
-        /* Estilos Globais e Fundo ESCURO (Dark Mode) */
+        /* ----------------------------------------------------- */
+        /* ESTILOS GERAIS E FUNDO PADRÃO (INICIALIZA COMO NOITE) */
+        /* ----------------------------------------------------- */
         body {
             margin: 0;
             padding: 0;
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-            background-color: #1a1a1a; 
             color: #e0e0e0; 
             overflow: hidden; 
+            transition: background-color 1s ease, background-image 1s ease; /* Transição suave */
+            background-color: #1a1a1a; /* Fundo padrão: Noite */
+        }
+        
+        /* ----------------------------------------------------- */
+        /* ESTILOS DE FUNDO DINÂMICOS */
+        /* ----------------------------------------------------- */
+
+        /* 🌙 NOITE (Seu fundo atual) */
+        .background-night {
+            background-color: #1a1a1a !important; 
+            color: #e0e0e0;
         }
 
-        /* Container de Partículas (Fundo Interativo) */
+        /* 🌅 AMANHECER (05:00 - 10:59) */
+        .background-morning {
+            /* Tons quentes do nascer do sol e azul claro */
+            background: linear-gradient(to top, #fcd34d, #fda47e, #475569) !important; 
+            color: #333; /* Texto mais escuro para contrastar com o fundo claro */
+        }
+
+        /* ☀️ DIA (11:00 - 17:59) */
+        .background-day {
+            /* Céu azul e mais neutro */
+            background: linear-gradient(to top, #94a3b8, #60a5fa, #3b82f6) !important;
+            color: #333; /* Texto mais escuro */
+        }
+
+        /* ----------------------------------------------------- */
+        /* ESTILOS DO CONTEÚDO (Mantidos) */
+        /* ----------------------------------------------------- */
+        
+        /* Container de Partículas (Fundo Interativo - APENAS NOITE) */
         #particles-js {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #1a1a1a;
             z-index: 1;
         }
 
-        /* Container Principal do Bloqueio (Acima das partículas) */
-        .main-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            position: relative;
-            z-index: 5;
-        }
-
-        /* Cartão de Bloqueio (Dark Card) */
+        /* Cartão de Bloqueio (O CARD ESCURO) */
         .block-card {
             background-color: rgba(30, 30, 30, 0.95);
             border-radius: 0.75rem; 
@@ -49,7 +68,12 @@
             text-align: center;
         }
 
-        /* Cores e Elementos */
+        /* Força o contraste do texto dentro do card escuro, independentemente do fundo */
+        .block-card * {
+            color: #e0e0e0; 
+        }
+        
+        /* Reaplicando cores específicas */
         .text-red-600 { color: #ff0000; } 
         .text-white { color: #fff; }
         .text-gray-300 { color: #d1d5db; }
@@ -66,38 +90,33 @@
             margin: 0 auto 1rem;
         }
         
-        /* 🔴 NOVO: Classe para centralizar o grupo YouTube */
         .youtube-title-group {
-            display: table; /* Faz com que o div se comporte como um bloco, mas com tamanho de conteúdo */
-            margin: 0 auto 1rem auto; /* Centraliza horizontalmente e adiciona margem inferior */
+            display: table;
+            margin: 0 auto 1rem auto;
             align-items: center;
             justify-content: center;
         }
 
-        /* ÍCONE AJUSTADO PARA SER MAIOR (2.5rem) e evitar desalinhamento */
         .icon-youtube-box {
             width: 2.5rem; 
             height: 2.5rem; 
             background-color: #ff0000; 
             border-radius: 0.25rem;
-            display: inline-flex; /* Usar inline-flex para alinhar com o texto */
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             margin-right: 0.25rem; 
             overflow: hidden; 
             flex-shrink: 0; 
             line-height: 0;
-            /* Garante alinhamento vertical com o texto */
             vertical-align: middle; 
         }
 
-        /* SVG interno ajustado */
         .icon-youtube-box svg {
             width: 1.5rem; 
             height: 1.5rem; 
         }
 
-        /* Inputs e Botão (Alinhados) */
         .input-style {
             width: 100%;
             padding: 0.75rem 1rem;
@@ -109,9 +128,6 @@
             transition: all 0.2s;
             box-sizing: border-box;
             box-shadow: inset 0 0 0 1px #4a4a4a; 
-        }
-        .input-style:focus { 
-            box-shadow: inset 0 0 0 1px #3b82f6, 0 0 0 2px rgba(59, 130, 246, 0.5); 
         }
         .button-submit {
             width: 100%;
@@ -125,9 +141,6 @@
             transition: background-color 0.2s;
             box-sizing: border-box; 
         }
-        .button-submit:hover { background-color: #1d4ed8; }
-        
-        /* Mensagem de Erro */
         .error-message {
             background-color: #451a1a;
             border: 1px solid #7f1d1d;
@@ -140,6 +153,15 @@
         }
 
         /* Utilitários e Margens */
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+            z-index: 5;
+        }
         .mb-8 { margin-bottom: 2rem; }
         .mb-4 { margin-bottom: 1rem; }
         .mb-2 { margin-bottom: 0.5rem; }
@@ -174,6 +196,7 @@
                     </div>
                     <span class="text-xl font-semibold text-white" style="vertical-align: middle;">YouTube</span>
                 </div>
+
                 <p class="text-gray-400">Este site está temporariamente bloqueado.</p>
                 <p class="text-sm text-gray-400 mt-2">Digite a senha para continuar.</p>
             </div>
@@ -214,6 +237,45 @@
     </div>
 
     <script>
+        // -----------------------------------------------------
+        // LÓGICA DE TROCA DE FUNDO BASEADA NA HORA
+        // -----------------------------------------------------
+        function updateBackground() {
+            const date = new Date();
+            const hour = date.getHours();
+            const body = document.body;
+            const particlesContainer = document.getElementById('particles-js');
+
+            // Remove todas as classes de fundo
+            body.classList.remove('background-morning', 'background-day', 'background-night');
+            
+            // Lógica de tempo (Horário de São Paulo/Brasil)
+            if (hour >= 5 && hour < 11) {
+                // 🌅 AMANHECER (5:00h até 10:59h)
+                body.classList.add('background-morning');
+                // Remove partículas no modo claro/dia
+                particlesContainer.style.display = 'none'; 
+            } else if (hour >= 11 && hour < 18) {
+                // ☀️ DIA (11:00h até 17:59h)
+                body.classList.add('background-day');
+                particlesContainer.style.display = 'none';
+            } else {
+                // 🌙 NOITE (18:00h até 4:59h)
+                body.classList.add('background-night');
+                // Mantém as partículas ativas
+                particlesContainer.style.display = 'block';
+            }
+        }
+
+        // Chama a função imediatamente
+        updateBackground(); 
+        
+        // Atualiza a cada minuto para garantir que a troca de horário seja detectada
+        setInterval(updateBackground, 60000); 
+
+        // -----------------------------------------------------
+        // LÓGICA DE DESBLOQUEIO (Mantida)
+        // -----------------------------------------------------
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('block-form');
             const passwordInput = document.getElementById('password');
@@ -253,13 +315,11 @@
                 const password = passwordInput.value;
 
                 if (password === CORRECT_PASSWORD) {
-                    // Senha correta: Salva no localStorage e redireciona para o YouTube
                     localStorage.setItem(STORAGE_KEY, 'true');
                     window.location.replace('https://www.youtube.com/');
                 } else {
-                    // Senha incorreta
                     attempts++;
-                    passwordInput.value = ''; // Limpa o campo
+                    passwordInput.value = '';
                     displayError('Senha incorreta. Tente novamente.');
                     updateAttempts();
                 }
@@ -281,6 +341,7 @@
             const ctx = canvas.getContext('2d');
             let particles = [];
             const particleCount = 60;
+            // Cores: Vermelho YouTube e tons de azul/amarelo para a noite
             const colors = ['#ff0000', '#93c5fd', '#a78bfa', '#fde047']; 
 
             function resize() {
@@ -303,7 +364,7 @@
 
                 draw() {
                     ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                    ctx.arc(this.x, this.y, this.y, 0, Math.PI * 2, false);
                     ctx.fillStyle = this.color;
                     ctx.globalAlpha = this.opacity;
                     ctx.fill();
@@ -329,6 +390,7 @@
 
             function animate() {
                 requestAnimationFrame(animate);
+                // Limpa o canvas, criando o efeito de movimento
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                 particles.forEach(particle => {
@@ -343,7 +405,8 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            initializeParticles('particles-js');
+            // Inicializa as partículas, mas elas só serão visíveis no modo 'night'
+            initializeParticles('particles-js'); 
         });
     </script>
 </body>

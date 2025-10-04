@@ -1,53 +1,77 @@
 /* ----------------------------------------------------- */
-/* ESTILOS GERAIS E FUNDO PADRÃO (INICIALIZA COMO NOITE) */
+/* ESTILOS GERAIS E FUNDO PADRÃO */
 /* ----------------------------------------------------- */
 body {
     margin: 0;
     padding: 0;
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-    /* REMOVIDO: color: #e0e0e0;  <<-- A COR SERÁ DEFINIDA PELAS CLASSES DE FUNDO/JS */
     overflow: hidden; 
     transition: background-color 1s ease, background-image 1s ease; /* Transição suave */
-    background-color: #1a1a1a; /* Fundo padrão: Noite */
+    background-color: #1a1a1a; /* Fundo padrão */
 }
 
 /* ----------------------------------------------------- */
-/* ESTILOS DE FUNDO DINÂMICOS (Com !important para garantir a sobreposição) */
+/* ESTILOS DE FUNDO DINÂMICOS */
 /* ----------------------------------------------------- */
 
-/* 🌙 NOITE */
+/* 🌙 NOITE - NOVO FUNDO COM ESTRELAS/LUA */
 .background-night {
-    background-color: #1a1a1a !important; 
-    color: #e0e0e0 !important; /* FORÇA TEXTO CLARO na NOITE */
+    /* Degradê do seu template de noite: azul escuro para preto */
+    background: linear-gradient(to bottom, #070e17, #020617, #000000) !important; 
+    color: #e0e0e0 !important; /* FORÇA TEXTO CLARO */
 }
 
 /* 🌅 AMANHECER (05:00 - 10:59) */
 .background-morning {
-    /* Tons quentes do nascer do sol e azul claro */
     background: linear-gradient(to top, #fcd34d, #fda47e, #475569) !important; 
-    color: #333 !important; /* FORÇA TEXTO ESCURO no AMANHECER */
+    color: #333 !important; /* FORÇA TEXTO ESCURO */
 }
 
 /* ☀️ DIA (11:00 - 17:59) */
 .background-day {
-    /* Céu azul e mais neutro */
     background: linear-gradient(to top, #94a3b8, #60a5fa, #3b82f6) !important;
-    color: #333 !important; /* FORÇA TEXTO ESCURO no DIA */
+    color: #333 !important; /* FORÇA TEXTO ESCURO */
 }
 
-/* ... O RESTANTE DO CSS PERMANECE IGUAL ... */
+/* ----------------------------------------------------- */
+/* ESTILOS DO NOVO CÉU NOTURNO (LUA E ESTRELAS) */
+/* ----------------------------------------------------- */
 
-/* ESTILOS DO CONTEÚDO */
-/* Container de Partículas (Fundo Interativo - APENAS NOITE) */
-#particles-js {
+#fancy-night-sky {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1; 
+    z-index: 1; /* Abaixo do card principal */
+    pointer-events: none; /* Não interfere no clique */
+    transition: opacity 1s ease;
 }
-/* Container Principal do Bloqueio (Acima das partículas) */
+
+#moon {
+    position: absolute;
+    top: 15vh;
+    right: 15vw;
+    width: 6rem; /* Tamanho da lua */
+    height: 6rem;
+    background-color: #fde047; /* Amarelo da lua */
+    border-radius: 50%;
+    /* Sombra do seu template */
+    box-shadow: 0 0 20px rgba(255, 255, 200, 0.6), 
+                0 0 40px rgba(255, 255, 200, 0.4), 
+                0 0 60px rgba(255, 255, 200, 0.2);
+}
+
+/* O JavaScript vai manipular a exibição deste container */
+.hidden-sky {
+    display: none !important;
+}
+
+/* ----------------------------------------------------- */
+/* ESTILOS DO CONTEÚDO (CARD) */
+/* ----------------------------------------------------- */
+
+/* Container Principal do Bloqueio (Acima do fundo dinâmico) */
 .main-container {
     min-height: 100vh;
     display: flex;
@@ -57,6 +81,7 @@ body {
     position: relative;
     z-index: 5; 
 }
+
 /* Cartão de Bloqueio (O CARD ESCURO) */
 .block-card {
     background-color: rgba(30, 30, 30, 0.95);
@@ -67,12 +92,13 @@ body {
     width: 90%;
     text-align: center;
 }
-/* O texto dentro do CARD ESCURO deve ser sempre CLARO,
-   independentemente do fundo do BODY (Manhã/Dia/Noite) */
+
+/* O texto dentro do CARD ESCURO deve ser sempre CLARO */
 .block-card * {
     color: #e0e0e0; 
 }
-/* Cores de destaque devem ser sempre claras ou fixas */
+
+/* Cores de destaque (mantidas) */
 .text-red-600 { color: #ff0000; } 
 .text-white { color: #fff; }
 .text-gray-300 { color: #d1d5db; }
@@ -151,12 +177,14 @@ body {
     font-size: 0.875rem;
 }
 
-/* Utilitários e Margens */
+/* Utilitários (que faltaram) */
+.text-center { text-align: center; }
 .mb-8 { margin-bottom: 2rem; }
 .mb-4 { margin-bottom: 1rem; }
 .mb-2 { margin-bottom: 0.5rem; }
 .mt-1 { margin-top: 0.25rem; }
 .mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
 .mt-6 { margin-top: 1.5rem; }
 .pt-4 { padding-top: 1rem; }
 .border-t { border-top: 1px solid #373737; }

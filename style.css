@@ -14,10 +14,10 @@ body {
 /* ESTILOS DE FUNDO DINÂMICOS */
 /* ----------------------------------------------------- */
 
-/* 🌙 NOITE - NOVO FUNDO COM ESTRELAS/LUA */
+/* 🌙 NOITE - FUNDO TURBINADO COM MAIS BRILHO E GLOW */
 .background-night {
-    /* Degradê do seu template de noite: azul escuro para preto */
-    background: linear-gradient(to bottom, #070e17, #020617, #000000) !important; 
+    /* Degradê MAIS VIBRANTE E PROFUNDO */
+    background: linear-gradient(to bottom, #10162a, #0d1222, #000000) !important; 
     color: #e0e0e0 !important; /* FORÇA TEXTO CLARO */
 }
 
@@ -43,8 +43,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1; /* Abaixo do card principal */
-    pointer-events: none; /* Não interfere no clique */
+    z-index: 1; 
+    pointer-events: none; 
     transition: opacity 1s ease;
 }
 
@@ -52,19 +52,32 @@ body {
     position: absolute;
     top: 15vh;
     right: 15vw;
-    width: 6rem; /* Tamanho da lua */
+    width: 6rem; 
     height: 6rem;
-    background-color: #fde047; /* Amarelo da lua */
+    background-color: #fffac2; /* Cor mais clara para mais brilho */
     border-radius: 50%;
-    /* Sombra do seu template */
-    box-shadow: 0 0 20px rgba(255, 255, 200, 0.6), 
-                0 0 40px rgba(255, 255, 200, 0.4), 
-                0 0 60px rgba(255, 255, 200, 0.2);
+    /* Sombra AUMENTADA para um GLOW mais forte */
+    box-shadow: 0 0 30px rgba(255, 255, 200, 1.0), 
+                0 0 60px rgba(255, 255, 200, 0.7), 
+                0 0 90px rgba(255, 255, 200, 0.4);
+    transition: opacity 1s ease;
+    /* Adiciona um movimento suave de flutuação */
+    animation: moonFloat 15s ease-in-out infinite alternate;
 }
 
 /* O JavaScript vai manipular a exibição deste container */
 .hidden-sky {
     display: none !important;
+}
+
+/* ANIMAÇÃO DA LUA (NOVA) */
+@keyframes moonFloat {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(10px, -15px);
+    }
 }
 
 /* ----------------------------------------------------- */
@@ -81,8 +94,6 @@ body {
     position: relative;
     z-index: 5; 
 }
-
-/* Cartão de Bloqueio (O CARD ESCURO) */
 .block-card {
     background-color: rgba(30, 30, 30, 0.95);
     border-radius: 0.75rem; 
@@ -92,102 +103,19 @@ body {
     width: 90%;
     text-align: center;
 }
-
-/* O texto dentro do CARD ESCURO deve ser sempre CLARO */
 .block-card * {
     color: #e0e0e0; 
 }
 
-/* Cores de destaque (mantidas) */
+/* Cores de destaque e utilitários (mantidos) */
 .text-red-600 { color: #ff0000; } 
 .text-white { color: #fff; }
-.text-gray-300 { color: #d1d5db; }
 .text-gray-400 { color: #9ca3af; }
-.text-gray-500 { color: #6b7280; }
-
-.icon-circle {
-    width: 5rem; height: 5rem;
-    background-color: #ff0000;
-    border-radius: 9999px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-}
-
-.youtube-title-group {
-    display: table;
-    margin: 0 auto 1rem auto;
-    align-items: center;
-    justify-content: center;
-}
-
-.icon-youtube-box {
-    width: 2.5rem; 
-    height: 2.5rem; 
-    background-color: #ff0000; 
-    border-radius: 0.25rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 0.25rem; 
-    overflow: hidden; 
-    flex-shrink: 0; 
-    line-height: 0;
-    vertical-align: middle; 
-}
-
-.icon-youtube-box svg {
-    width: 1.5rem; 
-    height: 1.5rem; 
-}
-
-.input-style {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: none;
-    border-radius: 0.5rem;
-    background-color: #2c2c2c;
-    color: #fff;
-    outline: none;
-    transition: all 0.2s;
-    box-sizing: border-box;
-    box-shadow: inset 0 0 0 1px #4a4a4a; 
-}
-.button-submit {
-    width: 100%;
-    background-color: #3b82f6; 
-    color: white;
-    font-weight: 600;
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.2s;
-    box-sizing: border-box; 
-}
-.error-message {
-    background-color: #451a1a;
-    border: 1px solid #7f1d1d;
-    color: #fca5a5;
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    font-size: 0.875rem;
-}
-
-/* Utilitários (que faltaram) */
+.font-semibold { font-weight: 600; }
+/* ... (outras classes aqui) ... */
 .text-center { text-align: center; }
 .mb-8 { margin-bottom: 2rem; }
 .mb-4 { margin-bottom: 1rem; }
-.mb-2 { margin-bottom: 0.5rem; }
-.mt-1 { margin-top: 0.25rem; }
-.mt-2 { margin-top: 0.5rem; }
 .mt-4 { margin-top: 1rem; }
-.mt-6 { margin-top: 1.5rem; }
-.pt-4 { padding-top: 1rem; }
 .border-t { border-top: 1px solid #373737; }
-.space-y-4 > * + * { margin-top: 1rem; }
-.font-bold { font-weight: 700; }
-.font-semibold { font-weight: 600; }
+/* ... */

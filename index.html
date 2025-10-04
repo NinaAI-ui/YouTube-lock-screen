@@ -23,7 +23,7 @@
         /* ESTILOS DE FUNDO DINÂMICOS */
         /* ----------------------------------------------------- */
 
-        /* 🌙 NOITE (Seu fundo atual) */
+        /* 🌙 NOITE */
         .background-night {
             background-color: #1a1a1a !important; 
             color: #e0e0e0;
@@ -67,7 +67,6 @@
             position: relative;
             z-index: 5; /* Fica na frente */
         }
-
 
         /* Cartão de Bloqueio (O CARD ESCURO) */
         .block-card {
@@ -241,11 +240,19 @@
 
     <script>
         // -----------------------------------------------------
-        // LÓGICA DE TROCA DE FUNDO BASEADA NA HORA
+        // LÓGICA DE TROCA DE FUNDO BASEADA NA HORA (FUSO HORÁRIO BRASIL)
         // -----------------------------------------------------
         function updateBackground() {
+            // Cria um objeto de data e força o fuso horário de São Paulo (BRT/BRST)
+            // Isso garante o horário do Brasil, mesmo se o relógio local do dispositivo estiver errado.
             const date = new Date();
-            const hour = date.getHours();
+            const hourString = date.toLocaleTimeString('pt-BR', { 
+                hour: '2-digit', 
+                hour12: false, 
+                timeZone: 'America/Sao_Paulo' 
+            });
+            const hour = parseInt(hourString, 10);
+            
             const body = document.body;
             const particlesContainer = document.getElementById('particles-js');
 
@@ -356,7 +363,8 @@
                 constructor() {
                     this.x = Math.random() * canvas.width;
                     this.y = Math.random() * canvas.height;
-                    this.radius = Math.random() * 2 + 1;
+                    // 🔴 AJUSTE FINAL: Raio fixo e muito pequeno (0.5px a 2px)
+                    this.radius = Math.random() * 1.5 + 0.5;
                     this.color = colors[Math.floor(Math.random() * colors.length)];
                     this.velocity = {
                         x: (Math.random() - 0.5) * 0.5,
@@ -367,7 +375,7 @@
 
                 draw() {
                     ctx.beginPath();
-                    // 🔴 CORREÇÃO APLICADA: Usando this.radius para o tamanho da bolinha
+                    // Usando this.radius para o tamanho da bolinha (corrigido)
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false); 
                     ctx.fillStyle = this.color;
                     ctx.globalAlpha = this.opacity;

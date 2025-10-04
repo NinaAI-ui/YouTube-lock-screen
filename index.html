@@ -13,34 +13,31 @@
             margin: 0;
             padding: 0;
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-            color: #e0e0e0; 
+            color: #e0e0e0; /* Cor do texto padrão (Noite) */
             overflow: hidden; 
             transition: background-color 1s ease, background-image 1s ease; /* Transição suave */
             background-color: #1a1a1a; /* Fundo padrão: Noite */
         }
         
         /* ----------------------------------------------------- */
-        /* ESTILOS DE FUNDO DINÂMICOS */
+        /* ESTILOS DE FUNDO DINÂMICOS (Com !important para garantir a sobreposição) */
         /* ----------------------------------------------------- */
 
         /* 🌙 NOITE */
         .background-night {
             background-color: #1a1a1a !important; 
-            color: #e0e0e0;
         }
 
         /* 🌅 AMANHECER (05:00 - 10:59) */
         .background-morning {
             /* Tons quentes do nascer do sol e azul claro */
             background: linear-gradient(to top, #fcd34d, #fda47e, #475569) !important; 
-            color: #333; /* Texto mais escuro para contrastar com o fundo claro */
         }
 
         /* ☀️ DIA (11:00 - 17:59) */
         .background-day {
             /* Céu azul e mais neutro */
             background: linear-gradient(to top, #94a3b8, #60a5fa, #3b82f6) !important;
-            color: #333; /* Texto mais escuro */
         }
 
         /* ----------------------------------------------------- */
@@ -54,7 +51,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1; /* Fica no fundo */
+            z-index: 1; 
         }
         
         /* Container Principal do Bloqueio (Acima das partículas) */
@@ -65,7 +62,7 @@
             justify-content: center;
             padding: 1rem;
             position: relative;
-            z-index: 5; /* Fica na frente */
+            z-index: 5; 
         }
 
         /* Cartão de Bloqueio (O CARD ESCURO) */
@@ -79,12 +76,13 @@
             text-align: center;
         }
 
-        /* Força o contraste do texto dentro do card escuro, independentemente do fundo */
+        /* O texto dentro do CARD ESCURO deve ser sempre CLARO,
+           independentemente do fundo do BODY (Manhã/Dia/Noite) */
         .block-card * {
             color: #e0e0e0; 
         }
         
-        /* Reaplicando cores específicas */
+        /* Cores de destaque devem ser sempre claras ou fixas */
         .text-red-600 { color: #ff0000; } 
         .text-white { color: #fff; }
         .text-gray-300 { color: #d1d5db; }
@@ -167,7 +165,7 @@
         .mb-8 { margin-bottom: 2rem; }
         .mb-4 { margin-bottom: 1rem; }
         .mb-2 { margin-bottom: 0.5rem; }
-        .mt-1 { margin-top: 0.25rem; } /* Novo para o display de hora */
+        .mt-1 { margin-top: 0.25rem; }
         .mt-2 { margin-top: 0.5rem; }
         .mt-6 { margin-top: 1.5rem; }
         .pt-4 { padding-top: 1rem; }
@@ -257,14 +255,13 @@
             // Pega apenas a hora (00-23) para a lógica de fundo
             const hour = parseInt(hourString.substring(0, 2), 10);
             
-            // 🔴 ATUALIZA O DISPLAY DA HORA
+            const body = document.body;
+            const particlesContainer = document.getElementById('particles-js');
             const timeDisplay = document.getElementById('current-time');
+
             if (timeDisplay) {
                 timeDisplay.innerText = `Hora de Brasília: ${hourString}h`;
             }
-            
-            const body = document.body;
-            const particlesContainer = document.getElementById('particles-js');
 
             // Remove todas as classes de fundo
             body.classList.remove('background-morning', 'background-day', 'background-night');
@@ -274,24 +271,27 @@
                 // 🌅 AMANHECER (5:00h até 10:59h)
                 body.classList.add('background-morning');
                 particlesContainer.style.display = 'none'; 
-                body.style.color = '#333'; // Ajusta cor do texto principal para claro
+                // 🔴 CORREÇÃO: Força a cor do texto do body para escuro (para contraste no fundo claro)
+                body.style.color = '#333'; 
             } else if (hour >= 11 && hour < 18) {
                 // ☀️ DIA (11:00h até 17:59h)
                 body.classList.add('background-day');
                 particlesContainer.style.display = 'none';
-                body.style.color = '#333'; // Ajusta cor do texto principal para claro
+                // 🔴 CORREÇÃO: Força a cor do texto do body para escuro (para contraste no fundo claro)
+                body.style.color = '#333'; 
             } else {
                 // 🌙 NOITE (18:00h até 4:59h)
                 body.classList.add('background-night');
                 particlesContainer.style.display = 'block';
-                body.style.color = '#e0e0e0'; // Ajusta cor do texto principal para escuro
+                // 🔴 CORREÇÃO: Força a cor do texto do body para claro (para contraste no fundo escuro)
+                body.style.color = '#e0e0e0'; 
             }
         }
 
         // Chama a função imediatamente
         updateBackground(); 
         
-        // Atualiza a cada 5 segundos para que o usuário veja a hora mudar e confirme o fuso.
+        // Atualiza a cada 5 segundos.
         setInterval(updateBackground, 5000); 
 
         // -----------------------------------------------------

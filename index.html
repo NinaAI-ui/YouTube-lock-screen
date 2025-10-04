@@ -11,8 +11,8 @@
             margin: 0;
             padding: 0;
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-            background-color: #1a1a1a; /* Fundo escuro geral */
-            color: #e0e0e0; /* Texto claro */
+            background-color: #0d0d0d; /* Fundo mais escuro para contrastar com o brilho */
+            color: #e0e0e0; 
             overflow: hidden; 
         }
         
@@ -23,25 +23,21 @@
         .justify-center { justify-content: center; }
         .p-4 { padding: 1rem; }
         
-        /* Cartão de Bloqueio (Com Efeito Blur de Vidro Jateado) */
+        /* Cartão de Bloqueio */
         .block-card {
-            background-color: rgba(30, 30, 30, 0.7); /* Mais transparente */
-            /* AQUI ESTÁ O EFEITO BLUR DE VIDRO JATEADO QUE VOCÊ QUER! */
-            backdrop-filter: blur(15px); /* Intensidade do blur */
-            -webkit-backdrop-filter: blur(15px); /* Para compatibilidade com navegadores Chrome/Safari */
-            
+            background-color: rgba(30, 30, 30, 0.98); 
             border-radius: 0.75rem; 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7); 
             padding: 2.5rem; 
             max-width: 28rem; 
             width: 90%;
             text-align: center;
             z-index: 10; 
             position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil */
+            border: 1px solid rgba(255, 255, 255, 0.1); 
         }
 
-        /* Título e Cores (Mantidos) */
+        /* Título e Cores */
         .text-red-600 { color: #f87171; } 
         .text-white { color: #fff; }
         .icon-circle {
@@ -50,9 +46,10 @@
             border-radius: 9999px;
             display: flex;
             align-items: center;
-            justify-center: center;
+            justify-content: center;
             margin: 0 auto 1.5rem;
         }
+        /* CORREÇÃO DO ÍCONE CORTADO: Ajustamos o padding da div para garantir espaço */
         .icon-youtube-box {
             width: 2rem; height: 2rem;
             background-color: #ef4444; 
@@ -61,6 +58,7 @@
             align-items: center;
             justify-content: center;
             margin-right: 0.5rem;
+            padding: 0.1rem; /* Pequeno padding para garantir que o SVG não encoste na borda */
         }
 
         /* Inputs e Botão (Mantidos) */
@@ -93,7 +91,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #1a1a1a; 
+            background-color: #0d0d0d; 
             z-index: 1;
         }
         
@@ -205,13 +203,11 @@
                 const password = passwordInput.value;
 
                 if (password === CORRECT_PASSWORD) {
-                    // Senha correta: Salva no localStorage e redireciona para o YouTube
                     localStorage.setItem(STORAGE_KEY, 'true');
                     window.location.replace('https://www.youtube.com/');
                 } else {
-                    // Senha incorreta
                     attempts++;
-                    passwordInput.value = ''; // Limpa o campo
+                    passwordInput.value = ''; 
                     displayError('Senha incorreta. Tente novamente.');
                     updateAttempts();
                 }
@@ -232,7 +228,7 @@
             
             const ctx = canvas.getContext('2d');
             let particles = [];
-            const particleCount = 40; 
+            const particleCount = 20; // REDUZIMOS a contagem para aumentar o impacto visual das bolas restantes
             const colors = ['#f87171', '#93c5fd', '#a78bfa', '#fde047', '#4ade80']; 
 
             function resize() {
@@ -244,13 +240,13 @@
                 constructor() {
                     this.x = Math.random() * canvas.width;
                     this.y = Math.random() * canvas.height;
-                    this.radius = Math.random() * 5 + 3; // Bolas de tamanho médio (3 a 8)
+                    this.radius = Math.random() * 10 + 8; 
                     this.color = colors[Math.floor(Math.random() * colors.length)];
                     this.velocity = {
-                        x: (Math.random() - 0.5) * 0.2, // Movimento lento e suave
+                        x: (Math.random() - 0.5) * 0.2, 
                         y: (Math.random() - 0.5) * 0.2 
                     };
-                    this.opacity = 0.5; // Opacidade suave
+                    this.opacity = 0.6; 
                 }
 
                 draw() {
@@ -259,8 +255,10 @@
                     ctx.fillStyle = this.color;
                     ctx.globalAlpha = this.opacity;
                     
-                    // IMPORTANTE: REMOVEMOS ctx.shadowBlur para deixar o Blur para o backdrop-filter
-                    
+                    // BRILHO EXTREMO: Tenta garantir que o brilho seja renderizado
+                    ctx.shadowColor = this.color; 
+                    ctx.shadowBlur = this.radius * 7; // AUMENTAMOS um pouco mais o brilho (7x o raio)
+
                     ctx.fill();
                 }
 
@@ -287,8 +285,10 @@
             function animate() {
                 requestAnimationFrame(animate);
                 
-                // Limpa o canvas para evitar rastros e o sumiço das partículas
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                // Limpeza SUAVE (rastro de luz): Aumentamos a opacidade de limpeza para 0.1
+                // Isso permite que o brilho se acumule mais rápido no fundo
+                ctx.fillStyle = 'rgba(13, 13, 13, 0.1)'; 
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
 
                 particles.forEach(particle => {
                     particle.update();

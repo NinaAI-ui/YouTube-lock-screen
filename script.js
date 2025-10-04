@@ -15,37 +15,37 @@ function updateBackground() {
     const hour = parseInt(hourString.substring(0, 2), 10);
     
     const body = document.body;
-    const particlesContainer = document.getElementById('particles-js');
+    const fancyNightSky = document.getElementById('fancy-night-sky'); // NOVO ELEMENTO
     const timeDisplay = document.getElementById('current-time');
 
     if (timeDisplay) {
         timeDisplay.innerText = `Hora de Brasília: ${hourString}h`;
     }
 
-    // Remove todas as classes de fundo
+    // Remove todas as classes de fundo e esconde o céu da noite por padrão
     body.classList.remove('background-morning', 'background-day', 'background-night');
-    
+    if (fancyNightSky) {
+        fancyNightSky.classList.add('hidden-sky'); 
+    }
+
     // Lógica de tempo (Horário de São Paulo/Brasil)
     if (hour >= 5 && hour < 11) {
         // 🌅 AMANHECER (5:00h até 10:59h)
         body.classList.add('background-morning');
-        particlesContainer.style.display = 'none'; 
     } else if (hour >= 11 && hour < 18) {
         // ☀️ DIA (11:00h até 17:59h)
         body.classList.add('background-day');
-        particlesContainer.style.display = 'none';
     } else {
         // 🌙 NOITE (18:00h até 4:59h)
         body.classList.add('background-night');
-        // Garante que o container de partículas seja exibido à noite
-        particlesContainer.style.display = 'block';
+        if (fancyNightSky) {
+            fancyNightSky.classList.remove('hidden-sky'); // MOSTRA O NOVO CÉU NOTURNO
+        }
     }
 }
 
 // Chama a função imediatamente
 updateBackground(); 
-
-// Atualiza a cada 5 segundos.
 setInterval(updateBackground, 5000); 
 
 // -----------------------------------------------------
@@ -102,83 +102,52 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // -----------------------------------------------------
-// LÓGICA DAS PARTÍCULAS
+// LÓGICA DE GERAÇÃO DE ESTRELAS SIMPLES
 // -----------------------------------------------------
-function initializeParticles(id) {
-    const canvas = document.createElement('canvas');
-    canvas.style.position = 'absolute';
-    canvas.style.top = '0';
-    canvas.style.left = '0';
-    canvas.style.width = '100%';
-    canvas.style.height = '100%';
-    canvas.style.zIndex = '0';
-    document.getElementById(id).appendChild(canvas);
-    
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    const particleCount = 60;
-    const colors = ['#ff0000', '#93c5fd', '#a78bfa', '#fde047']; 
+const starsContainer = document.getElementById('stars-container');
 
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+function generateStars() {
+    if (!starsContainer) return;
+    const starCount = 100;
+    let starsHTML = '';
+
+    for (let i = 0; i < starCount; i++) {
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        const size = Math.random() * 1.5 + 0.5;
+        const delay = Math.random() * 5;
+        const duration = Math.random() * 3 + 2;
+
+        // Cria uma estrela simples com um pequeno efeito de brilho e animação
+        starsHTML += `
+            <div style="
+                position: absolute;
+                left: ${x}%;
+                top: ${y}%;
+                width: ${size}px;
+                height: ${size}px;
+                background-color: white;
+                border-radius: 50%;
+                box-shadow: 0 0 ${size * 2}px rgba(255, 255, 255, 0.8);
+                opacity: 0.8;
+                animation: twinkle ${duration}s ease-in-out infinite alternate;
+                animation-delay: ${delay}s;
+            "></div>
+        `;
     }
-
-    class Particle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.radius = Math.random() * 1.5 + 0.5; // Raio fixo e pequeno
-            this.color = colors[Math.floor(Math.random() * colors.length)];
-            this.velocity = {
-                x: (Math.random() - 0.5) * 0.5,
-                y: (Math.random() - 0.5) * 0.5
-            };
-            this.opacity = 0.8;
-        }
-
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false); 
-            ctx.fillStyle = this.color;
-            ctx.globalAlpha = this.opacity;
-            ctx.fill();
-        }
-
-        update() {
-            this.x += this.velocity.x;
-            this.y += this.velocity.y;
-
-            if (this.x < 0 || this.x > canvas.width) this.velocity.x *= -1;
-            if (this.y < 0 || this.y > canvas.height) this.velocity.y *= -1;
-
-            this.draw();
-        }
-    }
-
-    function init() {
-        particles = [];
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
-    }
-
-    function animate() {
-        requestAnimationFrame(animate);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        particles.forEach(particle => {
-            particle.update();
-        });
-    }
-
-    window.addEventListener('resize', resize);
-    resize();
-    init();
-    animate();
+    starsContainer.innerHTML = starsHTML;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Inicializa a animação de partículas
-    initializeParticles('particles-js'); 
-});
+// Define a animação 'twinkle' (Brilho das estrelas) globalmente
+const styleSheet = document.createElement('style');
+styleSheet.innerHTML = `
+    @keyframes twinkle {
+        0% { opacity: 0.3; transform: scale(1); }
+        100% { opacity: 1; transform: scale(1.2); }
+    }
+`;
+document.head.appendChild(styleSheet);
+
+
+// Inicializa as estrelas no carregamento
+document.addEventListener('DOMContentLoaded', generateStars);

@@ -66,18 +66,25 @@
             margin: 0 auto 1rem;
         }
         
-        /* 🔴 Foco na correção: Garante o tamanho do quadrado arredondado */
+        /* 🔴 ÍCONE AJUSTADO PARA SER MAIOR (2.5rem) */
         .icon-youtube-box {
-            width: 2rem; 
-            height: 2rem; 
+            width: 2.5rem; /* Aumentado */
+            height: 2.5rem; /* Aumentado */
             background-color: #ff0000; 
             border-radius: 0.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 0.5rem;
-            /* Garante que o conteúdo interno (SVG) não ultrapasse a caixa */
             overflow: hidden; 
+            flex-shrink: 0; 
+            line-height: 0;
+        }
+
+        /* 🔴 SVG interno ajustado para caber no novo tamanho */
+        .icon-youtube-box svg {
+            width: 1.5rem; 
+            height: 1.5rem; 
         }
 
         /* Inputs e Botão (Alinhados) */
@@ -150,7 +157,7 @@
                 <h1 class="text-3xl font-bold text-red-600 mb-2">ACESSO BLOQUEADO</h1>
                 <div class="flex items-center justify-center mb-4">
                     <div class="icon-youtube-box">
-                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <svg class="text-white" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                         </svg>
                     </div>

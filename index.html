@@ -23,23 +23,29 @@
         .justify-center { justify-content: center; }
         .p-4 { padding: 1rem; }
         
-        /* Cartão de Bloqueio */
+        /* Cartão de Bloqueio: AGORA BRANCO COM TEXTO PRETO */
         .block-card {
-            background-color: rgba(30, 30, 30, 0.98); 
+            background-color: rgba(255, 255, 255, 0.98); /* Fundo BRANCO */
+            color: #1a1a1a; /* Cor do texto padrão do cartão: PRETO */
             border-radius: 0.75rem; 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7); 
-            padding: 2.5rem; /* Padding uniforme */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); /* Sombra Escura */
+            padding: 2.5rem; 
             max-width: 28rem; 
             width: 90%;
             text-align: center;
             z-index: 10; 
             position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border: 1px solid rgba(0, 0, 0, 0.1); 
         }
 
-        /* Título e Cores */
-        .text-red-600 { color: #f87171; } 
-        .text-white { color: #fff; }
+        /* Título e Cores: AJUSTANDO PARA FICAR ESCURO */
+        .text-red-600 { color: #cc0000; } /* Título Vermelho Escuro/Tijolo */
+        .text-white { color: #fff; } /* Usado apenas dentro de ícones, permanece branco */
+        
+        .text-gray-300 { color: #333333; } /* Título Escuro */
+        .text-gray-400 { color: #555555; } /* Subtexto Escuro */
+        .text-gray-500 { color: #777777; } /* Texto de rodapé Escuro */
+        
         .icon-circle {
             width: 5rem; height: 5rem;
             background-color: #b91c1c; 
@@ -50,9 +56,8 @@
             margin: 0 auto 1.5rem;
         }
         
-        /* CORREÇÃO DO ÍCONE CORTADO */
+        /* CORREÇÃO FINAL DO ÍCONE CORTADO */
         .icon-youtube-box {
-            /* Definimos um tamanho fixo para o container do ícone */
             width: 2.5rem; 
             height: 1.7rem; 
             background-color: #ef4444; 
@@ -61,24 +66,23 @@
             align-items: center;
             justify-content: center;
             margin-right: 0.5rem;
+            padding: 0.15rem 0; /* Padding extra para evitar cortes */
         }
         .icon-youtube-box svg {
-            /* Garantimos que o SVG preencha o box sem ser cortado */
             width: 1.5rem; 
             height: 1.5rem;
         }
 
-
-        /* Inputs e Botão */
+        /* Inputs e Botão: AJUSTANDO PARA O TEMA CLARO */
         .input-style {
             width: 100%;
             padding: 0.75rem 1rem;
-            border: 1px solid #4a4a4a; 
+            border: 1px solid #cccccc; /* Borda clara */
             border-radius: 0.5rem;
-            background-color: #2c2c2c; 
-            color: #fff;
+            background-color: #ffffff; /* Fundo do input branco */
+            color: #1a1a1a; /* Texto do input preto */
             outline: none;
-            box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+            box-sizing: border-box; /* Garante que o padding não aumente a largura total do input */
         }
         .button-submit {
             width: 100%;
@@ -106,7 +110,7 @@
         /* Utilitários */
         .mt-6 { margin-top: 1.5rem; }
         .pt-4 { padding-top: 1rem; }
-        .border-t { border-top: 1px solid #373737; } 
+        .border-t { border-top: 1px solid #cccccc; } /* Borda de separação clara */
         .font-bold { font-weight: 700; }
         .space-y-4 > * + * { margin-top: 1rem; }
     </style>
@@ -171,5 +175,144 @@
         </div>
     </div>
 
-    </body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('block-form');
+            const passwordInput = document.getElementById('password');
+            const errorContainer = document.getElementById('error-message-container');
+            const attemptsContainer = document.getElementById('attempts-container');
+            const CORRECT_PASSWORD = 'YTULA';
+            const STORAGE_KEY = 'youtube_block_unlocked';
+            let attempts = 0;
+
+            const updateAttempts = () => {
+                if (attempts > 0) {
+                    attemptsContainer.innerHTML = `
+                        <div class="mt-4 text-center">
+                            <p class="text-sm text-gray-400">
+                                Tentativas: <span class="font-semibold text-red-600">${attempts}</span>
+                            </p>
+                        </div>
+                    `;
+                } else {
+                    attemptsContainer.innerHTML = '';
+                }
+            };
+
+            const displayError = (message) => {
+                errorContainer.innerHTML = `
+                    <div class="error-message">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                        ${message}
+                    </div>
+                `;
+            };
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const password = passwordInput.value;
+
+                if (password === CORRECT_PASSWORD) {
+                    localStorage.setItem(STORAGE_KEY, 'true');
+                    window.location.replace('https://www.youtube.com/');
+                } else {
+                    attempts++;
+                    passwordInput.value = ''; 
+                    displayError('Senha incorreta. Tente novamente.');
+                    updateAttempts();
+                }
+            });
+        });
+    </script>
+
+    <script>
+        function initializeParticles(id) {
+            const canvas = document.createElement('canvas');
+            canvas.style.position = 'absolute';
+            canvas.style.top = '0';
+            canvas.style.left = '0';
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            canvas.style.zIndex = '0';
+            document.getElementById(id).appendChild(canvas);
+            
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const particleCount = 20; 
+            const colors = ['#f87171', '#93c5fd', '#a78bfa', '#fde047', '#4ade80']; 
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.radius = Math.random() * 10 + 8; 
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                    this.velocity = {
+                        x: (Math.random() - 0.5) * 0.2, 
+                        y: (Math.random() - 0.5) * 0.2 
+                    };
+                    this.opacity = 0.6; 
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = this.opacity;
+                    
+                    // BRILHO EXTREMO RESTAURADO
+                    ctx.shadowColor = this.color; 
+                    ctx.shadowBlur = this.radius * 7; 
+
+                    ctx.fill();
+                }
+
+                update() {
+                    this.x += this.velocity.x;
+                    this.y += this.velocity.y;
+
+                    if (this.x - this.radius < 0 || this.x + this.radius > canvas.width) this.velocity.x *= -1;
+                    if (this.y - this.radius < 0 || this.y + this.radius > canvas.height) this.velocity.y *= -1;
+
+                    this.draw();
+                }
+            }
+
+            function init() {
+                particles = [];
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(new Particle());
+                }
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // Limpeza SUAVE (rastro de luz): Essencial para o glow funcionar
+                ctx.fillStyle = 'rgba(13, 13, 13, 0.1)'; 
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach(particle => {
+                    particle.update();
+                });
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            init();
+            animate();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeParticles('particles-js');
+        });
+    </script>
+</body>
 </html>

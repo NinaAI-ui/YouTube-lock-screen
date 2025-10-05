@@ -43,71 +43,6 @@ updateTimeDisplay();
 setInterval(updateTimeDisplay, 5000); 
 
 // -----------------------------------------------------
-// LÓGICA DE DESBLOQUEIO (Comando via URL)
-// -----------------------------------------------------
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('block-form');
-    const passwordInput = document.getElementById('password');
-    const errorContainer = document.getElementById('error-message-container');
-    const attemptsContainer = document.getElementById('attempts-container');
-    const CORRECT_PASSWORD = 'YTULA';
-    let attempts = 0;
-
-    const updateAttempts = () => {
-        if (attempts > 0) {
-            attemptsContainer.innerHTML = `
-                <div class="mt-4 text-center">
-                    <p class="text-sm text-gray-400">
-                        Tentativas: <span class="font-semibold text-red-600">${attempts}</span>
-                    </p>
-                </div>
-            `;
-        } else {
-            attemptsContainer.innerHTML = '';
-        }
-    };
-
-    const displayError = (message) => {
-        errorContainer.innerHTML = `
-            <div class="error-message">
-                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-                ${message}
-            </div>
-        `;
-    };
-
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const password = passwordInput.value;
-        passwordInput.value = ''; // Limpa o campo sempre
-
-        if (password === CORRECT_PASSWORD) {
-            
-            // 1. Pega o URL de destino
-            const targetUrl = getTargetUrlFromQuery();
-            
-            // 2. ADICIONA O COMANDO DE DESBLOQUEIO À URL DE DESTINO.
-            // Verifica se a URL já tem parâmetros para usar '?' ou '&'.
-            const separator = targetUrl.includes('?') ? '&' : '?';
-            const unlockUrl = targetUrl + separator + 'unlocked=true';
-            
-            // 3. Feedback visual
-            document.body.innerHTML = '<div class="main-container"><div class="block-card" style="padding: 4rem;"><h2 class="text-3xl font-bold text-green-500">Acesso Liberado!</h2><p class="text-gray-400 mt-2">Redirecionando para o seu destino...</p></div></div>';
-            
-            // 4. Redireciona a janela atual para o YouTube COM o parâmetro.
-            window.location.replace(unlockUrl); 
-
-        } else {
-            attempts++;
-            displayError('Senha incorreta. Tente novamente.');
-            updateAttempts();
-        }
-    });
-});
-
-// -----------------------------------------------------
 // LÓGICA DE GERAÇÃO E ANIMAÇÃO DE ESTRELAS
 // -----------------------------------------------------
 const starsContainer = document.getElementById('stars-container');
@@ -153,15 +88,74 @@ styleSheet.innerHTML = `.text-green-500 { color: #10b981; }`;
 document.head.appendChild(styleSheet);
 
 
-// Inicializa as estrelas animadas no carregamento
-document.addEventListener('DOMContentLoaded', generateAnimatedStars);
-window.addEventListener('resize', generateAnimatedStars);
-
-
 // -----------------------------------------------------
-// FUNÇÃO PARA GARANTIR ANIMAÇÃO CONTÍNUA (CORREÇÃO DE BUG)
+// LÓGICA DE DESBLOQUEIO E INICIALIZAÇÃO (DOMContentLoaded)
 // -----------------------------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+    // Lógica de Desbloqueio (Sem Alterações)
+    const form = document.getElementById('block-form');
+    const passwordInput = document.getElementById('password');
+    const errorContainer = document.getElementById('error-message-container');
+    const attemptsContainer = document.getElementById('attempts-container');
+    const CORRECT_PASSWORD = 'YTULA';
+    let attempts = 0;
 
-// Recria todas as estrelas a cada 60 segundos (1 minuto) para garantir
-// que as animações reiniciem e o efeito seja constante.
-setInterval(generateAnimatedStars, 60000); 
+    const updateAttempts = () => {
+        if (attempts > 0) {
+            attemptsContainer.innerHTML = `
+                <div class="mt-4 text-center">
+                    <p class="text-sm text-gray-400">
+                        Tentativas: <span class="font-semibold text-red-600">${attempts}</span>
+                    </p>
+                </div>
+            `;
+        } else {
+            attemptsContainer.innerHTML = '';
+        }
+    };
+
+    const displayError = (message) => {
+        errorContainer.innerHTML = `
+            <div class="error-message">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+                ${message}
+            </div>
+        `;
+    };
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const password = passwordInput.value;
+        passwordInput.value = ''; // Limpa o campo sempre
+
+        if (password === CORRECT_PASSWORD) {
+            
+            const targetUrl = getTargetUrlFromQuery();
+            const separator = targetUrl.includes('?') ? '&' : '?';
+            const unlockUrl = targetUrl + separator + 'unlocked=true';
+            
+            document.body.innerHTML = '<div class="main-container"><div class="block-card" style="padding: 4rem;"><h2 class="text-3xl font-bold text-green-500">Acesso Liberado!</h2><p class="text-gray-400 mt-2">Redirecionando para o seu destino...</p></div></div>';
+            
+            window.location.replace(unlockUrl); 
+
+        } else {
+            attempts++;
+            displayError('Senha incorreta. Tente novamente.');
+            updateAttempts();
+        }
+    });
+
+    // Inicialização e Correção das Estrelas (Movido para dentro do DOMContentLoaded)
+    
+    // 1. Inicializa o primeiro conjunto de estrelas.
+    generateAnimatedStars(); 
+    
+    // 2. Garante que as estrelas se recriem em mudanças de tamanho de tela.
+    window.addEventListener('resize', generateAnimatedStars);
+    
+    // 3. CORREÇÃO DE BUG: Recria todas as estrelas a cada 60 segundos (1 minuto) para
+    //    garantir que as animações reiniciem e o efeito seja constante.
+    setInterval(generateAnimatedStars, 60000); 
+});

@@ -42,12 +42,10 @@ setInterval(updateTimeDisplay, 5000);
 // -----------------------------------------------------
 // LÓGICA DE GERAÇÃO E ANIMAÇÃO DE ESTRELAS
 // -----------------------------------------------------
-// AQUI PROCURAMOS O CONTÊINER GLOBALMENTE
-const starsContainer = document.getElementById('stars-container');
 
 function generateAnimatedStars() {
-    // Verificamos se o contêiner está disponível
-    const currentStarsContainer = starsContainer || document.getElementById('stars-container');
+    // Procura o contêiner no momento da execução para garantir que foi carregado
+    const currentStarsContainer = document.getElementById('stars-container');
 
     if (!currentStarsContainer) {
         console.warn("Contêiner de estrelas não encontrado. Verifique o ID no HTML.");
@@ -96,7 +94,7 @@ document.head.appendChild(styleSheet);
 // LÓGICA DE DESBLOQUEIO E INICIALIZAÇÃO (DOMContentLoaded)
 // -----------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-    // Lógica de Desbloqueio 
+    // Lógica de Desbloqueio (Sem alterações)
     const form = document.getElementById('block-form');
     const passwordInput = document.getElementById('password');
     const errorContainer = document.getElementById('error-message-container');
@@ -159,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Garante que as estrelas se recriem em mudanças de tamanho de tela.
     window.addEventListener('resize', generateAnimatedStars);
     
-    // 3. CORREÇÃO DE BUG: Recria todas as estrelas a cada 60 segundos (1 minuto) 
-    //    para garantir a animação contínua.
-    setInterval(generateAnimatedStars, 60000); 
+    // 3. CORREÇÃO FINAL: Recria todas as estrelas a cada 20 segundos (20000ms)
+    //    para evitar que as animações parem ou pareçam estáticas.
+    setInterval(generateAnimatedStars, 20000); 
 });

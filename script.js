@@ -1,5 +1,5 @@
 // -----------------------------------------------------
-// LÓGICA DE FUNDO SIMPLIFICADA (APENAS NOITE)
+// LÓGICA DE TEMPO E RELÓGIO (Mantida, mas sem mudar o fundo)
 // -----------------------------------------------------
 function updateTimeDisplay() {
     // Converte a hora para o fuso horário de São Paulo (BRT/BRST)
@@ -23,7 +23,7 @@ updateTimeDisplay();
 setInterval(updateTimeDisplay, 5000); 
 
 // -----------------------------------------------------
-// LÓGICA DE DESBLOQUEIO (Mantida)
+// LÓGICA DE DESBLOQUEIO (Para o Userscript)
 // -----------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('block-form');
@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorContainer = document.getElementById('error-message-container');
     const attemptsContainer = document.getElementById('attempts-container');
     const CORRECT_PASSWORD = 'YTULA';
-    const STORAGE_KEY = 'youtube_block_unlocked';
     let attempts = 0;
 
     const updateAttempts = () => {
@@ -64,8 +63,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = passwordInput.value;
 
         if (password === CORRECT_PASSWORD) {
-            localStorage.setItem(STORAGE_KEY, 'true');
-            window.location.replace('https://www.youtube.com/');
+            
+            // --- CÓDIGO CRÍTICO DE DESBLOQUEIO ---
+            
+            // 1. Envia a mensagem de "Desbloqueado" para a janela que abriu (YouTube)
+            // Isso aciona o redirecionamento do Userscript.
+            if (window.opener) {
+                window.opener.postMessage(
+                    { status: 'Desbloqueado' }, 
+                    'https://www.youtube.com' // Alvo de segurança
+                );
+                
+                // 2. Fecha a aba da tela de bloqueio
+                window.close();
+
+            } else {
+                // Caso não tenha sido aberto por um Userscript (para teste)
+                alert('Desbloqueado! (Mensagem postMessage enviada. Feche esta aba para continuar.)');
+            }
+            
+            // -----------------------------------
         } else {
             attempts++;
             passwordInput.value = '';
@@ -76,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // -----------------------------------------------------
-// LÓGICA DE GERAÇÃO E ANIMAÇÃO DE ESTRELAS (Mantida)
+// LÓGICA DE GERAÇÃO E ANIMAÇÃO DE ESTRELAS
 // -----------------------------------------------------
 const starsContainer = document.getElementById('stars-container');
 

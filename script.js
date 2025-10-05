@@ -3,21 +3,29 @@
 // -----------------------------------------------------
 function getTargetUrlFromQuery() {
     const params = new URLSearchParams(window.location.search);
-    const target = params.get('target');
+    let target = params.get('target');
     
-    // Se o target for válido, retorna o link decodificado
-    if (target) {
-        return target;
+    // Se o parâmetro 'target' for nulo, retorna o YouTube padrão
+    if (!target) {
+        return 'https://www.youtube.com/'; 
     }
-    // Caso contrário, retorna o link padrão do YouTube
-    return 'https://www.youtube.com/'; 
+    
+    // Decodifica a URL para garantir que caracteres especiais funcionem
+    try {
+        target = decodeURIComponent(target);
+    } catch (e) {
+        console.error("Erro ao decodificar a URL:", e);
+        return 'https://www.youtube.com/';
+    }
+    
+    // Retorna a URL de destino
+    return target; 
 }
 
 // -----------------------------------------------------
 // LÓGICA DE TEMPO E RELÓGIO
 // -----------------------------------------------------
 function updateTimeDisplay() {
-    // Converte a hora para o fuso horário de São Paulo (BRT/BRST)
     const date = new Date();
     const hourString = date.toLocaleTimeString('pt-BR', { 
         hour: '2-digit', 
@@ -31,13 +39,11 @@ function updateTimeDisplay() {
         timeDisplay.innerText = `Hora de Brasília: ${hourString}h`;
     }
 }
-
-// Chama a função imediatamente e atualiza a cada 5 segundos
 updateTimeDisplay(); 
 setInterval(updateTimeDisplay, 5000); 
 
 // -----------------------------------------------------
-// LÓGICA DE DESBLOQUEIO (Para o Userscript via Iframe)
+// LÓGICA DE DESBLOQUEIO (Comando via URL)
 // -----------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('block-form');
@@ -75,26 +81,26 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         const password = passwordInput.value;
+        passwordInput.value = ''; // Limpa o campo sempre
 
         if (password === CORRECT_PASSWORD) {
             
-            // Pega o URL que o userscript enviou
+            // 1. Pega o URL de destino
             const targetUrl = getTargetUrlFromQuery();
-
-            // 1. Envia a mensagem de "Desbloqueado" com o URL de destino
-            if (window.parent) {
-                window.parent.postMessage(
-                    { status: 'Desbloqueado', targetUrl: targetUrl }, 
-                    'https://www.youtube.com'
-                );
-            }
             
-            // 2. Feedback visual. O userscript removerá o iframe e redirecionará.
-            document.body.innerHTML = '<div class="main-container"><div class="block-card" style="padding: 4rem;"><h2 class="text-3xl font-bold text-green-500">Acesso Liberado!</h2><p class="text-gray-400 mt-2">Você será redirecionado para o seu vídeo em instantes...</p></div></div>';
+            // 2. ADICIONA O COMANDO DE DESBLOQUEIO À URL DE DESTINO.
+            // Verifica se a URL já tem parâmetros para usar '?' ou '&'.
+            const separator = targetUrl.includes('?') ? '&' : '?';
+            const unlockUrl = targetUrl + separator + 'unlocked=true';
+            
+            // 3. Feedback visual
+            document.body.innerHTML = '<div class="main-container"><div class="block-card" style="padding: 4rem;"><h2 class="text-3xl font-bold text-green-500">Acesso Liberado!</h2><p class="text-gray-400 mt-2">Redirecionando para o seu destino...</p></div></div>';
+            
+            // 4. Redireciona a janela atual para o YouTube COM o parâmetro.
+            window.location.replace(unlockUrl); 
 
         } else {
             attempts++;
-            passwordInput.value = '';
             displayError('Senha incorreta. Tente novamente.');
             updateAttempts();
         }

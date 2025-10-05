@@ -60,7 +60,8 @@ body {
     opacity: 0; /* Começa invisível para a animação */
     animation-name: starMovement, starTwinkle; /* Duas animações combinadas */
     animation-timing-function: linear, ease-in-out;
-    animation-iteration-count: infinite, infinite alternate;
+    /* CORREÇÃO: 'starMovement' precisa de 'alternate' para ir e voltar; 'starTwinkle' precisa de 'infinite' para piscar */
+    animation-iteration-count: infinite alternate, infinite; 
 }
 
 /* Animação para o movimento das estrelas (usa variáveis injetadas pelo JS) */

@@ -40,7 +40,7 @@ updateTimeDisplay();
 setInterval(updateTimeDisplay, 5000); 
 
 // -----------------------------------------------------
-// LÓGICA DE GERAÇÃO E ANIMAÇÃO DE ESTRELAS
+// LÓGICA DE GERAÇÃO E ANIMAÇÃO DE ESTRELAS (O GERADOR)
 // -----------------------------------------------------
 
 function generateAnimatedStars() {
@@ -51,23 +51,25 @@ function generateAnimatedStars() {
         console.warn("Contêiner de estrelas não encontrado. Verifique o ID no HTML.");
         return; 
     }
-    currentStarsContainer.innerHTML = ''; 
+    currentStarsContainer.innerHTML = ''; // Limpa as estrelas antigas
     const starCount = 150; 
     
     for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.className = 'star';
 
-        const size = Math.random() * 2 + 1; 
-        const x = Math.random() * 100;
-        const y = Math.random() * 100;
+        const size = Math.random() * 2 + 1; // Tamanho de 1px a 3px
+        const x = Math.random() * 100; // Posição X aleatória (0 a 100vw)
+        const y = Math.random() * 100; // Posição Y aleatória (0 a 100vh)
 
+        // Variáveis de Movimento (duração entre 20s e 50s)
         const dx = (Math.random() - 0.5) * 50; 
         const dy = (Math.random() - 0.5) * 50; 
         const durationMovement = Math.random() * 30 + 20; 
         const delayMovement = Math.random() * 10; 
 
-        const durationTwinkle = Math.random() * 4 + 2; 
+        // VARIÁVEIS DE BRILHO CORRIGIDAS: Duração entre 5s e 15s (evita que parem de brilhar)
+        const durationTwinkle = Math.random() * 10 + 5; 
         const delayTwinkle = Math.random() * 5; 
 
         star.style.cssText = `
@@ -76,7 +78,7 @@ function generateAnimatedStars() {
             width: ${size}px;
             height: ${size}px;
             --dx: ${dx}vw; 
-            --dy: ${dy}vh;
+            --dy: ${dy}vh; 
             animation-duration: ${durationMovement}s, ${durationTwinkle}s;
             animation-delay: ${delayMovement}s, ${delayTwinkle}s;
         `;
@@ -94,7 +96,7 @@ document.head.appendChild(styleSheet);
 // LÓGICA DE DESBLOQUEIO E INICIALIZAÇÃO (DOMContentLoaded)
 // -----------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-    // Lógica de Desbloqueio (Sem alterações)
+    // Lógica de Desbloqueio 
     const form = document.getElementById('block-form');
     const passwordInput = document.getElementById('password');
     const errorContainer = document.getElementById('error-message-container');
@@ -149,15 +151,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Inicialização e Correção das Estrelas
+    // Inicialização e Correção do Gerador de Estrelas
     
-    // 1. Inicializa o primeiro conjunto de estrelas.
+    // 1. Inicia o gerador imediatamente após o carregamento do DOM.
     generateAnimatedStars(); 
     
-    // 2. Garante que as estrelas se recriem em mudanças de tamanho de tela.
+    // 2. Garante que o gerador recrie estrelas em mudanças de tamanho de tela.
     window.addEventListener('resize', generateAnimatedStars);
     
-    // 3. CORREÇÃO FINAL: Recria todas as estrelas a cada 20 segundos (20000ms)
-    //    para evitar que as animações parem ou pareçam estáticas.
+    // 3. Garante que o gerador recrie estrelas a cada 20 segundos para animação contínua.
     setInterval(generateAnimatedStars, 20000); 
 });

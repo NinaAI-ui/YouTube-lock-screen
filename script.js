@@ -100,7 +100,7 @@ document.head.appendChild(styleSheet);
 // LÓGICA DE DESBLOQUEIO E INICIALIZAÇÃO (DOMContentLoaded)
 // -----------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-    // Lógica de Desbloqueio (Sem alterações)
+    // Lógica de Desbloqueio 
     const form = document.getElementById('block-form');
     const passwordInput = document.getElementById('password');
     const errorContainer = document.getElementById('error-message-container');
@@ -155,14 +155,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Inicialização e Correção do Gerador de Estrelas
+    // Inicialização e Gerenciamento do Gerador de Estrelas
     
-    // 1. Inicia o gerador imediatamente após o carregamento do DOM.
+    // 1. Inicia o gerador imediatamente.
     generateAnimatedStars(); 
     
     // 2. Garante que o gerador recrie estrelas em mudanças de tamanho de tela.
     window.addEventListener('resize', generateAnimatedStars);
     
-    // 3. Intervalo de Regeneração Final (60 segundos)
+    // 3. Intervalo de Regeneração (60 segundos) para garantir animação contínua e suave.
     setInterval(generateAnimatedStars, 60000); 
 });

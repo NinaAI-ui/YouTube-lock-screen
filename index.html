@@ -18,6 +18,7 @@
     <div class="main-container">
         <div class="block-card">
             
+            <!-- SEÇÃO DO TÍTULO RESTAURADA -->
             <div class="youtube-title-group mb-4">
                 <div class="icon-youtube-box">
                     <svg fill="currentColor" viewBox="0 0 24 24">
@@ -27,13 +28,14 @@
                 <h1 class="text-2xl font-bold">Acesso Restrito</h1>
             </div>
 
+            <!-- TEXTOS DE INSTRUÇÃO RESTAURADOS -->
             <p class="text-gray-400 mb-6">Este conteúdo é protegido. Por favor, insira a senha para continuar.</p>
             <p id="current-time" class="text-gray-500 text-sm mb-6"></p>
 
+            <!-- FORMULÁRIO COM O BOTÃO NOVO -->
             <form id="block-form" class="space-y-4">
-                <input type="password" id="password" class="input-style" placeholder="Digite sua senha aqui" autocomplete="current-password">
+                <input type="password" id="password" class="input-style" placeholder="Digite sua senha aqui" autocomplete="current-password" required>
                 
-                <!-- O NOVO BOTÃO ANIMADO -->
                 <button type="submit" class="bubble-button">
                     <span class="button-text">Desbloquear</span>
                     <!-- Bolhas Animadas -->
@@ -46,6 +48,7 @@
                 </button>
             </form>
             
+            <!-- CONTAINERS DE MENSAGEM RESTAURADOS -->
             <div id="error-message-container" class="mt-4"></div>
             <div id="attempts-container"></div>
         </div>

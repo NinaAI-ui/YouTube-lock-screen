@@ -1,5 +1,5 @@
 // -----------------------------------------------------
-// LÓGICA DE TEMPO E RELÓGIO (Mantida, mas sem mudar o fundo)
+// LÓGICA DE TEMPO E RELÓGIO
 // -----------------------------------------------------
 function updateTimeDisplay() {
     // Converte a hora para o fuso horário de São Paulo (BRT/BRST)
@@ -17,13 +17,12 @@ function updateTimeDisplay() {
     }
 }
 
-// Chama a função imediatamente
+// Chama a função imediatamente e atualiza a cada 5 segundos
 updateTimeDisplay(); 
-// Apenas atualiza o relógio a cada 5 segundos
 setInterval(updateTimeDisplay, 5000); 
 
 // -----------------------------------------------------
-// LÓGICA DE DESBLOQUEIO (Para o Userscript)
+// LÓGICA DE DESBLOQUEIO (Para o Userscript via Iframe)
 // -----------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('block-form');
@@ -66,22 +65,17 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // --- CÓDIGO CRÍTICO DE DESBLOQUEIO ---
             
-            // 1. Envia a mensagem de "Desbloqueado" para a janela que abriu (YouTube)
-            // Isso aciona o redirecionamento do Userscript.
-            if (window.opener) {
-                window.opener.postMessage(
+            // 1. Envia a mensagem de "Desbloqueado" para a janela PAI (o YouTube que contém o iframe)
+            if (window.parent) {
+                window.parent.postMessage(
                     { status: 'Desbloqueado' }, 
-                    'https://www.youtube.com' // Alvo de segurança
+                    'https://www.youtube.com' // Alvo de segurança (o domínio que está rodando o userscript)
                 );
-                
-                // 2. Fecha a aba da tela de bloqueio
-                window.close();
-
-            } else {
-                // Caso não tenha sido aberto por um Userscript (para teste)
-                alert('Desbloqueado! (Mensagem postMessage enviada. Feche esta aba para continuar.)');
             }
             
+            // 2. Feedback visual enquanto o userscript remove o iframe
+            document.body.innerHTML = '<div class="main-container"><div class="block-card" style="padding: 4rem;"><h2 class="text-3xl font-bold text-green-500">Acesso Liberado!</h2><p class="text-gray-400 mt-2">Você será redirecionado em instantes...</p></div></div>';
+
             // -----------------------------------
         } else {
             attempts++;
@@ -139,10 +133,7 @@ function generateAnimatedStars() {
 // Define a animação 'twinkle' (Brilho das estrelas) globalmente (para o CSS)
 const styleSheet = document.createElement('style');
 styleSheet.innerHTML = `
-    @keyframes twinkle {
-        0% { opacity: 0.3; transform: scale(1); }
-        100% { opacity: 1; transform: scale(1.2); }
-    }
+    .text-green-500 { color: #10b981; } 
 `;
 document.head.appendChild(styleSheet);
 

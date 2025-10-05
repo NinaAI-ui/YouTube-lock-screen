@@ -163,6 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Garante que o gerador recrie estrelas em mudanças de tamanho de tela.
     window.addEventListener('resize', generateAnimatedStars);
     
-    // 3. Intervalo de Regeneração (60 segundos) para garantir animação contínua e suave.
-    setInterval(generateAnimatedStars, 60000); 
+    // 3. Intervalo de Regeneração CORRIGIDO (40 segundos) para sobrepor animações.
+    setInterval(generateAnimatedStars, 40000); 
 });

@@ -58,9 +58,9 @@ body {
     box-shadow: 0 0 4px rgba(255, 255, 255, 0.8),
                 0 0 8px rgba(255, 255, 255, 0.4);
     opacity: 0; /* Começa invisível para a animação */
-    animation-name: starMovement, starTwinkle; /* Duas animações combinadas */
+    animation-name: starMovement, starTwinkle; /* Ordem: 1º Movimento, 2º Brilho */
     animation-timing-function: linear, ease-in-out;
-    /* CORREÇÃO: 'infinite alternate' para Movimento, 'infinite' para Brilho. */
+    /* CORREÇÃO: 'infinite alternate' para Movimento; 'infinite' para Brilho. */
     animation-iteration-count: infinite alternate, infinite; 
 }
 

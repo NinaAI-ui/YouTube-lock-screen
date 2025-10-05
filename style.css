@@ -1,5 +1,5 @@
 /* ----------------------------------------------------- */
-/* ESTILOS GERAIS: AGORA SÓ HÁ O MODO NOITE */
+/* ESTILOS GERAIS – CÉU FIXO E TRANSIÇÕES SUAVES */
 /* ----------------------------------------------------- */
 body {
     margin: 0;
@@ -7,15 +7,13 @@ body {
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     overflow: hidden; 
     transition: background-color 1s ease, background-image 1s ease; 
-    background: linear-gradient(to bottom, #1a2a4c, #0d1e3a, #0a0a0a); 
-    color: #e0e0e0; 
+    background: linear-gradient(to bottom, #1a2a4c, #0d1e3a, #0a0a0a);
+    color: #e0e0e0;
 }
 
-
 /* ----------------------------------------------------- */
-/* ESTILOS DO CÉU NOTURNO (LUA E ESTRELAS) */
+/* CÉU NOTURNO (LUA + ESTRELAS) */
 /* ----------------------------------------------------- */
-
 #fancy-night-sky {
     position: fixed;
     top: 0;
@@ -27,6 +25,7 @@ body {
     transition: opacity 1s ease;
 }
 
+/* LUA PULSANTE */
 #moon {
     position: absolute;
     top: 15vh;
@@ -35,9 +34,10 @@ body {
     height: 6rem;
     background-color: #fce883; 
     border-radius: 50%;
-    box-shadow: 0 0 30px rgba(255, 255, 200, 0.8), 
-                0 0 60px rgba(255, 255, 200, 0.6), 
-                0 0 100px rgba(255, 255, 200, 0.4); 
+    box-shadow: 
+        0 0 30px rgba(255, 255, 200, 0.8), 
+        0 0 60px rgba(255, 255, 200, 0.6), 
+        0 0 100px rgba(255, 255, 200, 0.4); 
     transition: opacity 1s ease;
     animation: moonPulse 4s ease-in-out infinite alternate; 
 }
@@ -47,40 +47,46 @@ body {
     100% { transform: scale(1.02); opacity: 1; }
 }
 
-/* Estilo para cada estrela animada (Gerada pelo JS) */
+/* ----------------------------------------------------- */
+/* ESTILO DAS ESTRELAS GERADAS PELO JS */
+/* ----------------------------------------------------- */
 .star {
     position: absolute;
     background-color: #ffffff; 
     border-radius: 50%;
-    box-shadow: 0 0 4px rgba(255, 255, 255, 0.8),
-                0 0 8px rgba(255, 255, 255, 0.4);
+    box-shadow: 
+        0 0 4px rgba(255, 255, 255, 0.8),
+        0 0 8px rgba(255, 255, 255, 0.4);
     opacity: 0; 
     animation-name: starMovement, starTwinkle; 
     animation-timing-function: linear, ease-in-out;
-    animation-iteration-count: infinite alternate, infinite; 
     
-    /* USA VARIÁVEIS DO JS. Duração do brilho é FIXA em 60s para garantir que não pare. */
-    animation-duration: var(--movement-duration, 40s), 60s; 
-    animation-delay: var(--movement-delay, 0s), var(--twinkle-delay, 0s); 
+    /* infinito e contínuo — sem alternate para não inverter e causar “reset” */
+    animation-iteration-count: infinite, infinite;
+
+    /* durações e atrasos definidos via variáveis CSS */
+    animation-duration: var(--movement-duration, 40s), var(--twinkle-duration, 10s);
+    animation-delay: var(--movement-delay, 0s), var(--twinkle-delay, 0s);
 }
 
-/* Animação para o movimento das estrelas */
+/* MOVIMENTO DAS ESTRELAS */
 @keyframes starMovement {
     from { transform: translate(0, 0); }
-    to { transform: translate(var(--dx), var(--dy)); } 
+    to { transform: translate(var(--dx), var(--dy)); }
 }
 
-/* Animação de brilho para as estrelas (pulsar/piscar) */
+/* BRILHO DAS ESTRELAS */
 @keyframes starTwinkle {
-    0% { opacity: 0; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1); }
+    0%   { opacity: 0; transform: scale(0.8); }
+    25%  { opacity: 0.5; transform: scale(0.9); }
+    50%  { opacity: 1; transform: scale(1); }
+    75%  { opacity: 0.5; transform: scale(0.9); }
     100% { opacity: 0; transform: scale(0.8); }
 }
 
 /* ----------------------------------------------------- */
-/* ESTILOS DO CONTEÚDO (CARD) */
+/* CONTEÚDO PRINCIPAL (CARD/BLOQUEIO) */
 /* ----------------------------------------------------- */
-
 .main-container {
     min-height: 100vh;
     display: flex;
@@ -105,14 +111,25 @@ body {
     color: #e0e0e0; 
 }
 
+/* ----------------------------------------------------- */
+/* CORES E TIPOGRAFIA */
+/* ----------------------------------------------------- */
 .text-red-600 { color: #ff0000; } 
-.text-white { color: #fff; }
+.text-white { color: #ffffff; }
 .text-gray-300 { color: #d1d5db; }
 .text-gray-400 { color: #9ca3af; }
 .text-gray-500 { color: #6b7280; }
+.text-green-500 { color: #10b981; }
 
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+
+/* ----------------------------------------------------- */
+/* ÍCONES E ELEMENTOS DE INTERFACE */
+/* ----------------------------------------------------- */
 .icon-circle {
-    width: 5rem; height: 5rem;
+    width: 5rem; 
+    height: 5rem;
     background-color: #ff0000;
     border-radius: 9999px;
     display: flex;
@@ -148,6 +165,9 @@ body {
     height: 1.5rem; 
 }
 
+/* ----------------------------------------------------- */
+/* CAMPOS DE FORMULÁRIO */
+/* ----------------------------------------------------- */
 .input-style {
     width: 100%;
     padding: 0.75rem 1rem;
@@ -160,6 +180,12 @@ body {
     box-sizing: border-box;
     box-shadow: inset 0 0 0 1px #4a4a4a; 
 }
+
+.input-style:focus {
+    box-shadow: inset 0 0 0 2px #3b82f6;
+}
+
+/* BOTÃO */
 .button-submit {
     width: 100%;
     background-color: #3b82f6; 
@@ -172,6 +198,14 @@ body {
     transition: background-color 0.2s;
     box-sizing: border-box; 
 }
+
+.button-submit:hover {
+    background-color: #2563eb;
+}
+
+/* ----------------------------------------------------- */
+/* MENSAGEM DE ERRO */
+/* ----------------------------------------------------- */
 .error-message {
     background-color: #451a1a;
     border: 1px solid #7f1d1d;
@@ -183,7 +217,9 @@ body {
     font-size: 0.875rem;
 }
 
-/* Utilitários */
+/* ----------------------------------------------------- */
+/* UTILITÁRIOS */
+/* ----------------------------------------------------- */
 .text-center { text-align: center; }
 .mb-8 { margin-bottom: 2rem; }
 .mb-4 { margin-bottom: 1rem; }
@@ -195,5 +231,3 @@ body {
 .pt-4 { padding-top: 1rem; }
 .border-t { border-top: 1px solid #373737; }
 .space-y-4 > * + * { margin-top: 1rem; }
-.font-bold { font-weight: 700; }
-.font-semibold { font-weight: 600; }

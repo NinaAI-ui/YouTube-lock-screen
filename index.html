@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>ACESSO BLOQUEADO - YouTube</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
 
+  <!-- Céu -->
   <div id="fancy-night-sky">
     <div id="moon"></div>
     <div id="stars-container"></div>
   </div>
 
+  <!-- Caixa -->
   <div class="main-container">
     <div class="block-card">
       <div class="text-center mb-8">
@@ -26,17 +28,17 @@
         <h1 class="text-3xl font-bold text-red-600 mb-2">ACESSO BLOQUEADO</h1>
         <div class="youtube-title-group">
           <div class="icon-youtube-box">
-            <svg fill="currentColor" viewBox="0 0 24 24">
-              <path
-                d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545S4.495 3.545 2.623 4.05A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.121 2.136C4.495 20.455 12 20.455 12 20.455s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.121-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            <svg fill="currentColor" viewBox="0 0 24 24"><path
+              d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545S4.495 3.545 2.623 4.05A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.121 2.136C4.495 20.455 12 20.455 12 20.455s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.121-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
             </svg>
           </div>
           <span class="text-xl font-semibold text-white">YouTube</span>
         </div>
 
         <p class="text-gray-400">Este site está temporariamente bloqueado.</p>
-        <p class="text-gray-100"><strong>Para continuar, acesse o YouTube no modo anônimo
-          (Nova aba anônima nos três pontinhos).</strong></p>
+        <p class="text-gray-100">
+          <strong>Para continuar, acesse o YouTube no modo anônimo (Nova aba anônima).</strong>
+        </p>
         <p class="text-sm text-gray-400 mt-2">Digite a senha para continuar.</p>
       </div>
 
@@ -50,16 +52,16 @@
 
         <div id="error-message-container"></div>
 
-        <!-- botão mágico -->
-        <button type="submit"
+        <!-- Botão mágico -->
+        <button type="submit" 
           class="relative overflow-hidden w-full px-8 py-4 rounded-full font-extrabold text-xl text-white
                  bg-gradient-to-br from-purple-600 to-blue-600
-                 hover:from-purple-700 hover:to-blue-700 focus:outline-none
-                 focus:ring-4 focus:ring-purple-300 focus:ring-opacity-50
+                 hover:from-purple-700 hover:to-blue-700
+                 focus:outline-none focus:ring-4 focus:ring-purple-300 focus:ring-opacity-50
                  transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl transform hover:scale-105">
           <span class="relative z-10">Desbloquear Acesso</span>
 
-          <!-- bolhas -->
+          <!-- Bolhas -->
           <div class="absolute rounded-full pointer-events-none filter blur-sm w-8 h-8 bg-purple-400/50"
                style="top:0;left:0;animation:bubble-float-1 10s 0s ease-in-out infinite"></div>
           <div class="absolute rounded-full pointer-events-none filter blur-sm w-6 h-6 bg-blue-400/50"

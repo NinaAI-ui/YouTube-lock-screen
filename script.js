@@ -5,12 +5,10 @@ function getTargetUrlFromQuery() {
     const params = new URLSearchParams(window.location.search);
     let target = params.get('target');
     
-    // Se o parâmetro 'target' for nulo, retorna o YouTube padrão
     if (!target) {
         return 'https://www.youtube.com/'; 
     }
     
-    // Decodifica a URL para garantir que caracteres especiais funcionem
     try {
         target = decodeURIComponent(target);
     } catch (e) {
@@ -18,7 +16,6 @@ function getTargetUrlFromQuery() {
         return 'https://www.youtube.com/';
     }
     
-    // Retorna a URL de destino
     return target; 
 }
 
@@ -45,11 +42,18 @@ setInterval(updateTimeDisplay, 5000);
 // -----------------------------------------------------
 // LÓGICA DE GERAÇÃO E ANIMAÇÃO DE ESTRELAS
 // -----------------------------------------------------
+// AQUI PROCURAMOS O CONTÊINER GLOBALMENTE
 const starsContainer = document.getElementById('stars-container');
 
 function generateAnimatedStars() {
-    if (!starsContainer) return;
-    starsContainer.innerHTML = ''; 
+    // Verificamos se o contêiner está disponível
+    const currentStarsContainer = starsContainer || document.getElementById('stars-container');
+
+    if (!currentStarsContainer) {
+        console.warn("Contêiner de estrelas não encontrado. Verifique o ID no HTML.");
+        return; 
+    }
+    currentStarsContainer.innerHTML = ''; 
     const starCount = 150; 
     
     for (let i = 0; i < starCount; i++) {
@@ -78,11 +82,11 @@ function generateAnimatedStars() {
             animation-duration: ${durationMovement}s, ${durationTwinkle}s;
             animation-delay: ${delayMovement}s, ${delayTwinkle}s;
         `;
-        starsContainer.appendChild(star);
+        currentStarsContainer.appendChild(star);
     }
 }
 
-// Estilo auxiliar
+// Estilo auxiliar (mantido)
 const styleSheet = document.createElement('style');
 styleSheet.innerHTML = `.text-green-500 { color: #10b981; }`;
 document.head.appendChild(styleSheet);
@@ -92,7 +96,7 @@ document.head.appendChild(styleSheet);
 // LÓGICA DE DESBLOQUEIO E INICIALIZAÇÃO (DOMContentLoaded)
 // -----------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-    // Lógica de Desbloqueio (Sem Alterações)
+    // Lógica de Desbloqueio 
     const form = document.getElementById('block-form');
     const passwordInput = document.getElementById('password');
     const errorContainer = document.getElementById('error-message-container');
@@ -128,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         const password = passwordInput.value;
-        passwordInput.value = ''; // Limpa o campo sempre
+        passwordInput.value = '';
 
         if (password === CORRECT_PASSWORD) {
             
@@ -147,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Inicialização e Correção das Estrelas (Movido para dentro do DOMContentLoaded)
+    // Inicialização e Correção das Estrelas
     
     // 1. Inicializa o primeiro conjunto de estrelas.
     generateAnimatedStars(); 
@@ -155,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Garante que as estrelas se recriem em mudanças de tamanho de tela.
     window.addEventListener('resize', generateAnimatedStars);
     
-    // 3. CORREÇÃO DE BUG: Recria todas as estrelas a cada 60 segundos (1 minuto) para
-    //    garantir que as animações reiniciem e o efeito seja constante.
+    // 3. CORREÇÃO DE BUG: Recria todas as estrelas a cada 60 segundos (1 minuto) 
+    //    para garantir a animação contínua.
     setInterval(generateAnimatedStars, 60000); 
 });

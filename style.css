@@ -1,18 +1,18 @@
 /* ----------------------------------------------------- */
-/* ESTILOS GERAIS – FUNDO NOTURNO */
+/* ESTILO GERAL DA PÁGINA – FUNDO DO CÉU */
 /* ----------------------------------------------------- */
 body {
     margin: 0;
     padding: 0;
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     overflow: hidden;
-    transition: background-color 1s ease, background-image 1s ease;
     background: linear-gradient(to bottom, #1a2a4c, #0d1e3a, #0a0a0a);
     color: #e0e0e0;
+    transition: background-color 1s ease, background-image 1s ease;
 }
 
 /* ----------------------------------------------------- */
-/* CÉU NOTURNO (LUA + ESTRELAS) */
+/* CAMADA DO CÉU – LUA E CONTÊINER DE ESTRELAS */
 /* ----------------------------------------------------- */
 #fancy-night-sky {
     position: fixed;
@@ -20,12 +20,12 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
     pointer-events: none;
+    z-index: 1;
     transition: opacity 1s ease;
 }
 
-/* LUA PULSANTE */
+/* L U A */
 #moon {
     position: absolute;
     top: 15vh;
@@ -38,43 +38,43 @@ body {
         0 0 30px rgba(255, 255, 200, 0.8),
         0 0 60px rgba(255, 255, 200, 0.6),
         0 0 100px rgba(255, 255, 200, 0.4);
-    transition: opacity 1s ease;
     animation: moonPulse 4s ease-in-out infinite alternate;
 }
 
 @keyframes moonPulse {
-    0% { transform: scale(1);   opacity: 0.9; }
-    100%{ transform: scale(1.02); opacity: 1; }
+    0%   { transform: scale(1); opacity: 0.9; }
+    100% { transform: scale(1.02); opacity: 1; }
 }
 
 /* ----------------------------------------------------- */
-/* ESTRELAS ANIMADAS (GERADAS PELO JS) */
+/* ESTRELAS GERADAS VIA JAVASCRIPT */
 /* ----------------------------------------------------- */
 .star {
     position: absolute;
     background-color: #ffffff;
     border-radius: 50%;
     box-shadow:
-        0 0 4px rgba(255,255,255,0.8),
-        0 0 8px rgba(255,255,255,0.4);
-    opacity: 0;
+        0 0 4px rgba(255, 255, 255, 0.8),
+        0 0 8px rgba(255, 255, 255, 0.4);
+    opacity: 0; /* controlado via fade-in JS */
+
+    /* duas animações: movimento linear + brilho pulsante */
     animation-name: starMovement, starTwinkle;
     animation-timing-function: linear, ease-in-out;
-
-    /* movimento linear infinito, brilho pulsante alternando */
     animation-iteration-count: infinite, infinite alternate;
 
+    /* parâmetros vindos do JS */
     animation-duration: var(--movement-duration, 40s), var(--twinkle-duration, 10s);
     animation-delay: var(--movement-delay, 0s), var(--twinkle-delay, 0s);
 }
 
-/* MOVIMENTO DAS ESTRELAS */
+/* MOVIMENTO SUAVE DAS ESTRELAS */
 @keyframes starMovement {
     from { transform: translate(0, 0); }
-    to { transform: translate(var(--dx), var(--dy)); }
+    to   { transform: translate(var(--dx), var(--dy)); }
 }
 
-/* BRILHO DAS ESTRELAS – nunca desaparece totalmente */
+/* BRILHO CONTÍNUO – SEM APAGAR COMPLETAMENTE */
 @keyframes starTwinkle {
     0%   { opacity: 0.3; transform: scale(0.85); }
     25%  { opacity: 0.6; transform: scale(0.9); }
@@ -84,7 +84,7 @@ body {
 }
 
 /* ----------------------------------------------------- */
-/* CONTEÚDO PRINCIPAL (CARD DE BLOQUEIO) */
+/* CONTEÚDO DA PÁGINA (CARD DE DESBLOQUEIO/YOUTUBE) */
 /* ----------------------------------------------------- */
 .main-container {
     min-height: 100vh;
@@ -111,10 +111,10 @@ body {
 }
 
 /* ----------------------------------------------------- */
-/* CORE SET DE CORES E TIPOGRAFIA */
+/* CORES E TIPOGRAFIA */
 /* ----------------------------------------------------- */
 .text-red-600 { color: #ff0000; }
-.text-white { color: #ffffff; }
+.text-white   { color: #ffffff; }
 .text-gray-300 { color: #d1d5db; }
 .text-gray-400 { color: #9ca3af; }
 .text-gray-500 { color: #6b7280; }
@@ -124,7 +124,7 @@ body {
 .font-semibold { font-weight: 600; }
 
 /* ----------------------------------------------------- */
-/* ÍCONES E CABEÇALHOS */
+/* ÍCONES E ELEMENTOS VISUAIS */
 /* ----------------------------------------------------- */
 .icon-circle {
     width: 5rem;
@@ -173,7 +173,7 @@ body {
     border: none;
     border-radius: 0.5rem;
     background-color: #2c2c2c;
-    color: #fff;
+    color: #ffffff;
     outline: none;
     transition: all 0.2s;
     box-sizing: border-box;
@@ -217,7 +217,7 @@ body {
 }
 
 /* ----------------------------------------------------- */
-/* UTILITÁRIOS */
+/* UTILITÁRIOS DE ESPAÇO E ALINHAMENTO */
 /* ----------------------------------------------------- */
 .text-center { text-align: center; }
 .mb-8 { margin-bottom: 2rem; }

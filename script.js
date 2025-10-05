@@ -61,16 +61,16 @@ function generateAnimatedStars() {
         const x = Math.random() * 100; 
         const y = Math.random() * 100; 
 
-        // Variáveis de Movimento (duração entre 20s e 50s)
+        // Parâmetros de Movimento e Atraso (serão injetados como variáveis CSS)
         const dx = (Math.random() - 0.5) * 50; 
         const dy = (Math.random() - 0.5) * 50; 
-        const durationMovement = Math.random() * 30 + 20; 
+        const durationMovement = Math.random() * 30 + 20; // 20s a 50s
         const delayMovement = Math.random() * 10; 
 
-        // VARIÁVEIS DE BRILHO CORRIGIDAS: Duração entre 5s e 15s (mais tempo para brilhar)
-        const durationTwinkle = Math.random() * 10 + 5; 
-        const delayTwinkle = Math.random() * 5; 
+        // Parâmetros de Brilho
+        const delayTwinkle = Math.random() * 5; // A duração é fixa em 60s no CSS
 
+        // Injetando as propriedades via variáveis CSS (Custom Properties)
         star.style.cssText = `
             left: ${x}vw; 
             top: ${y}vh;
@@ -78,8 +78,13 @@ function generateAnimatedStars() {
             height: ${size}px;
             --dx: ${dx}vw; 
             --dy: ${dy}vh; 
-            animation-duration: ${durationMovement}s, ${durationTwinkle}s;
-            animation-delay: ${delayMovement}s, ${delayTwinkle}s;
+            
+            /* Duração e Atraso do Movimento */
+            --movement-duration: ${durationMovement}s;
+            --movement-delay: ${delayMovement}s;
+            
+            /* Atraso do Brilho (Duração é fixa no CSS) */
+            --twinkle-delay: ${delayTwinkle}s;
         `;
         currentStarsContainer.appendChild(star);
     }
@@ -158,6 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Garante que o gerador recrie estrelas em mudanças de tamanho de tela.
     window.addEventListener('resize', generateAnimatedStars);
     
-    // 3. Intervalo de Regeneração Corrigido (60 segundos) para não cortar a animação de 50s.
+    // 3. Intervalo de Regeneração Final (60 segundos)
     setInterval(generateAnimatedStars, 60000); 
 });

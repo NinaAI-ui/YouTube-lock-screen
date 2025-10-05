@@ -1,17 +1,27 @@
-/* --- base e céu iguais --- */
-body{margin:0;padding:0;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;overflow:hidden;transition:background-color 1s ease,background-image 1s ease;background:linear-gradient(to bottom,#1a2a4c,#0d1e3a,#0a0a0a);color:#e0e0e0}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+  overflow: hidden;
+  background: linear-gradient(to bottom,#1a2a4c,#0d1e3a,#0a0a0a);
+  color: #e0e0e0;
+}
 
-#fancy-night-sky{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;transition:opacity 1s ease}
-#moon{position:absolute;top:15vh;right:15vw;width:6rem;height:6rem;background-color:#fce883;border-radius:50%;box-shadow:0 0 30px rgba(255,255,200,.8),0 0 60px rgba(255,255,200,.6),0 0 100px rgba(255,255,200,.4);animation:moonPulse 4s ease-in-out infinite alternate}
-@keyframes moonPulse{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.02);opacity:1}}
+/* ---------- Céu ---------- */
+#fancy-night-sky{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
+#moon{
+  position:absolute;top:15vh;right:15vw;width:6rem;height:6rem;
+  background:#fce883;border-radius:50%;
+  box-shadow:0 0 30px rgba(255,255,200,.8),0 0 60px rgba(255,255,200,.6),0 0 100px rgba(255,255,200,.4);
+  animation:moonPulse 4s ease-in-out infinite alternate;
+}
+@keyframes moonPulse{from{transform:scale(1);opacity:.9}to{transform:scale(1.02);opacity:1}}
 
-/* estrelas corrigidas */
 .star{
   position:absolute;
-  background-color:#fff;
-  border-radius:50%;
+  background:#fff;border-radius:50%;
   box-shadow:0 0 4px rgba(255,255,255,.8),0 0 8px rgba(255,255,255,.4);
-  opacity:.5;
+  opacity:.6;
   animation-name:starMovement,starTwinkle;
   animation-timing-function:linear,ease-in-out;
   animation-iteration-count:infinite,infinite;
@@ -20,40 +30,76 @@ body{margin:0;padding:0;font-family:ui-sans-serif,system-ui,-apple-system,BlinkM
 }
 @keyframes starMovement{from{transform:translate(0,0)}to{transform:translate(var(--dx),var(--dy))}}
 @keyframes starTwinkle{
-  0%{opacity:.3;transform:scale(.85)}
-  25%{opacity:.7;transform:scale(.9)}
+  0%{opacity:.3;transform:scale(.8)}
+  25%{opacity:.6;transform:scale(.9)}
   50%{opacity:1;transform:scale(1)}
-  75%{opacity:.7;transform:scale(.9)}
-  100%{opacity:.3;transform:scale(.85)}
+  75%{opacity:.6;transform:scale(.9)}
+  100%{opacity:.3;transform:scale(.8)}
 }
 
-/* --- card original --- */
+/* ---------- Card ---------- */
 .main-container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;position:relative;z-index:5}
-.block-card{background-color:rgba(30,30,30,.95);border-radius:.75rem;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);padding:2.5rem;max-width:28rem;width:90%;text-align:center}
-.block-card *{color:#e0e0e0}
-.text-red-600{color:#ff0000}.text-white{color:#fff}.text-gray-300{color:#d1d5db}.text-gray-400{color:#9ca3af}.text-gray-500{color:#6b7280}
-
-/* ícone proibido corrigido */
-.icon-circle{
-  width:5rem;
-  height:5rem;
-  background-color:#ff0000;
-  border-radius:9999px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:0 auto 1rem;
-  color:#fff;           /* força stroke branco */
+.block-card{
+  background:rgba(30,30,30,.95);border-radius:.75rem;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);
+  padding:2.5rem;max-width:28rem;width:90%;text-align:center;
 }
-.icon-circle svg{width:2.5rem;height:2.5rem;}
-
-.youtube-title-group{display:table;margin:0 auto 1rem auto;align-items:center;justify-content:center}
-.icon-youtube-box{width:2.5rem;height:2.5rem;background-color:#ff0000;border-radius:.25rem;display:inline-flex;align-items:center;justify-content:center;margin-right:.25rem;overflow:hidden;flex-shrink:0;line-height:0;vertical-align:middle}
+.block-card *{color:#e0e0e0}
+.icon-circle{
+  width:5rem;height:5rem;background:#ff0000;border-radius:9999px;
+  display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;
+  color:#fff; /* faz o stroke do SVG ficar branco */
+}
+.icon-circle svg{width:2rem;height:2rem}
+.icon-youtube-box{
+  width:2.5rem;height:2.5rem;background:#ff0000;border-radius:.25rem;
+  display:inline-flex;align-items:center;justify-content:center;margin-right:.25rem
+}
 .icon-youtube-box svg{width:1.5rem;height:1.5rem}
+.youtube-title-group{display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.input-style{
+  width:100%;padding:.75rem 1rem;border:none;border-radius:.5rem;
+  background:#2c2c2c;color:#fff;outline:none;transition:.2s;
+  box-shadow:inset 0 0 0 1px #4a4a4a;
+}
+.input-style:focus{box-shadow:inset 0 0 0 2px #3b82f6}
+.error-message{
+  background:#451a1a;border:1px solid #7f1d1d;color:#fca5a5;
+  padding:.75rem 1rem;border-radius:.5rem;display:flex;align-items:center;font-size:.875rem;
+}
+.text-center{text-align:center}.mb-8{margin-bottom:2rem}.text-xs{font-size:.75rem}.mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.pt-4{padding-top:1rem}.border-t{border-top:1px solid #373737}
 
-.input-style{width:100%;padding:.75rem 1rem;border:none;border-radius:.5rem;background-color:#2c2c2c;color:#fff;outline:none;transition:all .2s;box-sizing:border-box;box-shadow:inset 0 0 0 1px #4a4a4a}
-.button-submit{width:100%;background-color:#3b82f6;color:#fff;font-weight:600;padding:.75rem 1rem;border-radius:.5rem;cursor:pointer;border:none;transition:background-color .2s;box-sizing:border-box}
-.button-submit:hover{background-color:#2563eb}
-.error-message{background-color:#451a1a;border:1px solid #7f1d1d;color:#fca5a5;padding:.75rem 1rem;border-radius:.5rem;display:flex;align-items:center;font-size:.875rem}
-
-.text-center{text-align:center}.mb-8{margin-bottom:2rem}.mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.pt-4{padding-top:1rem}.border-t{border-top:1px solid #373737}.space-y-4>*+*{margin-top:1rem}.font-bold{font-weight:700}.font-semibold{font-weight:600}
+/* ---------- Botão Mágico ---------- */
+.bubble-button{
+  position:relative;overflow:hidden;width:100%;
+  padding:.75rem 1rem;border:none;border-radius:.5rem;
+  font-weight:700;font-size:1rem;color:#fff;
+  background:linear-gradient(to right,#9333ea,#3b82f6);
+  cursor:pointer;transition:transform .2s ease,box-shadow .2s ease;
+}
+.bubble-button:hover{transform:scale(1.03);box-shadow:0 0 20px rgba(147,197,253,.4)}
+.bubble-button:focus{outline:none;box-shadow:0 0 0 3px rgba(147,197,253,.4)}
+.bubble-button .button-text{position:relative;z-index:10}
+.bubble-button .bubble{
+  position:absolute;top:0;left:0;border-radius:50%;pointer-events:none;filter:blur(4px);
+}
+@keyframes bubble-float-1{
+  0%{transform:translate(-50%,100%)scale(.5);opacity:0}
+  25%{transform:translate(20%,20%)scale(.8);opacity:.7}
+  50%{transform:translate(70%,-30%)scale(1);opacity:.5}
+  75%{transform:translate(10%,80%)scale(.6);opacity:.3}
+  100%{transform:translate(150%,-50%)scale(.4);opacity:0}
+}
+@keyframes bubble-float-2{
+  0%{transform:translate(150%,-50%)scale(.3);opacity:0}
+  25%{transform:translate(80%,50%)scale(.7);opacity:.6}
+  50%{transform:translate(10%,10%)scale(.9);opacity:.8}
+  75%{transform:translate(-30%,70%)scale(.5);opacity:.4}
+  100%{transform:translate(-50%,150%)scale(.2);opacity:0}
+}
+@keyframes bubble-float-3{
+  0%{transform:translate(50%,-100%)scale(.7);opacity:0}
+  25%{transform:translate(10%,30%)scale(.6);opacity:.9}
+  50%{transform:translate(90%,60%)scale(.8);opacity:.7}
+  75%{transform:translate(40%,10%)scale(.5);opacity:.5}
+  100%{transform:translate(-20%,150%)scale(.3);opacity:0}
+}

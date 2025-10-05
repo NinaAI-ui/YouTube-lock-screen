@@ -1,7 +1,7 @@
 // -----------------------------------------------------
-// LÓGICA DE TROCA DE FUNDO BASEADA NA HORA (FUSO HORÁRIO BRASIL)
+// LÓGICA DE FUNDO SIMPLIFICADA (APENAS NOITE)
 // -----------------------------------------------------
-function updateBackground() {
+function updateTimeDisplay() {
     // Converte a hora para o fuso horário de São Paulo (BRT/BRST)
     const date = new Date();
     const hourString = date.toLocaleTimeString('pt-BR', { 
@@ -11,42 +11,16 @@ function updateBackground() {
         timeZone: 'America/Sao_Paulo' 
     });
     
-    // Pega apenas a hora (00-23) para a lógica de fundo
-    const hour = parseInt(hourString.substring(0, 2), 10);
-    
-    const body = document.body;
-    const fancyNightSky = document.getElementById('fancy-night-sky'); 
     const timeDisplay = document.getElementById('current-time');
-
     if (timeDisplay) {
         timeDisplay.innerText = `Hora de Brasília: ${hourString}h`;
-    }
-
-    // Remove todas as classes de fundo e esconde o céu da noite por padrão
-    body.classList.remove('background-morning', 'background-day', 'background-night');
-    if (fancyNightSky) {
-        fancyNightSky.classList.add('hidden-sky'); 
-    }
-
-    // Lógica de tempo (Horário de São Paulo/Brasil)
-    if (hour >= 5 && hour < 11) {
-        // 🌅 AMANHECER (5:00h até 10:59h)
-        body.classList.add('background-morning');
-    } else if (hour >= 11 && hour < 18) {
-        // ☀️ DIA (11:00h até 17:59h)
-        body.classList.add('background-day');
-    } else {
-        // 🌙 NOITE (18:00h até 4:59h)
-        body.classList.add('background-night');
-        if (fancyNightSky) {
-            fancyNightSky.classList.remove('hidden-sky'); // MOSTRA O NOVO CÉU NOTURNO
-        }
     }
 }
 
 // Chama a função imediatamente
-updateBackground(); 
-setInterval(updateBackground, 5000); 
+updateTimeDisplay(); 
+// Apenas atualiza o relógio a cada 5 segundos
+setInterval(updateTimeDisplay, 5000); 
 
 // -----------------------------------------------------
 // LÓGICA DE DESBLOQUEIO (Mantida)
@@ -102,14 +76,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // -----------------------------------------------------
-// LÓGICA DE GERAÇÃO E ANIMAÇÃO DE ESTRELAS
+// LÓGICA DE GERAÇÃO E ANIMAÇÃO DE ESTRELAS (Mantida)
 // -----------------------------------------------------
 const starsContainer = document.getElementById('stars-container');
 
 function generateAnimatedStars() {
     if (!starsContainer) return;
     starsContainer.innerHTML = ''; // Limpa estrelas antigas, se houver
-    const starCount = 150; // Aumentei para mais estrelas
+    const starCount = 150; 
     
     for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
@@ -120,17 +94,17 @@ function generateAnimatedStars() {
         const y = Math.random() * 100;
 
         // Propriedades para movimento
-        const dx = (Math.random() - 0.5) * 50; // Movimento horizontal de -25% a 25%
-        const dy = (Math.random() - 0.5) * 50; // Movimento vertical de -25% a 25%
-        const durationMovement = Math.random() * 30 + 20; // Duração do movimento (20-50s)
-        const delayMovement = Math.random() * 10; // Atraso para o início do movimento
+        const dx = (Math.random() - 0.5) * 50; 
+        const dy = (Math.random() - 0.5) * 50; 
+        const durationMovement = Math.random() * 30 + 20; 
+        const delayMovement = Math.random() * 10; 
 
         // Propriedades para brilho (twinkle)
-        const durationTwinkle = Math.random() * 4 + 2; // Duração do brilho (2-6s)
-        const delayTwinkle = Math.random() * 5; // Atraso para o brilho
+        const durationTwinkle = Math.random() * 4 + 2; 
+        const delayTwinkle = Math.random() * 5; 
 
         star.style.cssText = `
-            left: ${x}vw; /* Usar vw/vh para cobrir a tela */
+            left: ${x}vw; 
             top: ${y}vh;
             width: ${size}px;
             height: ${size}px;
@@ -145,8 +119,17 @@ function generateAnimatedStars() {
     }
 }
 
+// Define a animação 'twinkle' (Brilho das estrelas) globalmente (para o CSS)
+const styleSheet = document.createElement('style');
+styleSheet.innerHTML = `
+    @keyframes twinkle {
+        0% { opacity: 0.3; transform: scale(1); }
+        100% { opacity: 1; transform: scale(1.2); }
+    }
+`;
+document.head.appendChild(styleSheet);
+
+
 // Inicializa as estrelas animadas no carregamento
 document.addEventListener('DOMContentLoaded', generateAnimatedStars);
-
-// Garante que as estrelas sejam regeneradas se o tamanho da tela mudar
 window.addEventListener('resize', generateAnimatedStars);

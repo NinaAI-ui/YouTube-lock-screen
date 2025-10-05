@@ -1,4 +1,19 @@
 // -----------------------------------------------------
+// FUNÇÃO PARA PEGAR O URL DE DESTINO DA QUERY STRING
+// -----------------------------------------------------
+function getTargetUrlFromQuery() {
+    const params = new URLSearchParams(window.location.search);
+    const target = params.get('target');
+    
+    // Se o target for válido, retorna o link decodificado
+    if (target) {
+        return target;
+    }
+    // Caso contrário, retorna o link padrão do YouTube
+    return 'https://www.youtube.com/'; 
+}
+
+// -----------------------------------------------------
 // LÓGICA DE TEMPO E RELÓGIO
 // -----------------------------------------------------
 function updateTimeDisplay() {
@@ -63,20 +78,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (password === CORRECT_PASSWORD) {
             
-            // --- CÓDIGO CRÍTICO DE DESBLOQUEIO ---
-            
-            // 1. Envia a mensagem de "Desbloqueado" para a janela PAI (o YouTube que contém o iframe)
+            // Pega o URL que o userscript enviou
+            const targetUrl = getTargetUrlFromQuery();
+
+            // 1. Envia a mensagem de "Desbloqueado" com o URL de destino
             if (window.parent) {
                 window.parent.postMessage(
-                    { status: 'Desbloqueado' }, 
-                    'https://www.youtube.com' // Alvo de segurança (o domínio que está rodando o userscript)
+                    { status: 'Desbloqueado', targetUrl: targetUrl }, 
+                    'https://www.youtube.com'
                 );
             }
             
-            // 2. Feedback visual enquanto o userscript remove o iframe
-            document.body.innerHTML = '<div class="main-container"><div class="block-card" style="padding: 4rem;"><h2 class="text-3xl font-bold text-green-500">Acesso Liberado!</h2><p class="text-gray-400 mt-2">Você será redirecionado em instantes...</p></div></div>';
+            // 2. Feedback visual. O userscript removerá o iframe e redirecionará.
+            document.body.innerHTML = '<div class="main-container"><div class="block-card" style="padding: 4rem;"><h2 class="text-3xl font-bold text-green-500">Acesso Liberado!</h2><p class="text-gray-400 mt-2">Você será redirecionado para o seu vídeo em instantes...</p></div></div>';
 
-            // -----------------------------------
         } else {
             attempts++;
             passwordInput.value = '';
@@ -93,24 +108,22 @@ const starsContainer = document.getElementById('stars-container');
 
 function generateAnimatedStars() {
     if (!starsContainer) return;
-    starsContainer.innerHTML = ''; // Limpa estrelas antigas, se houver
+    starsContainer.innerHTML = ''; 
     const starCount = 150; 
     
     for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.className = 'star';
 
-        const size = Math.random() * 2 + 1; // Tamanho entre 1px e 3px
+        const size = Math.random() * 2 + 1; 
         const x = Math.random() * 100;
         const y = Math.random() * 100;
 
-        // Propriedades para movimento
         const dx = (Math.random() - 0.5) * 50; 
         const dy = (Math.random() - 0.5) * 50; 
         const durationMovement = Math.random() * 30 + 20; 
         const delayMovement = Math.random() * 10; 
 
-        // Propriedades para brilho (twinkle)
         const durationTwinkle = Math.random() * 4 + 2; 
         const delayTwinkle = Math.random() * 5; 
 
@@ -119,10 +132,8 @@ function generateAnimatedStars() {
             top: ${y}vh;
             width: ${size}px;
             height: ${size}px;
-            /* Variáveis CSS para o movimento */
             --dx: ${dx}vw; 
             --dy: ${dy}vh;
-            /* Animações */
             animation-duration: ${durationMovement}s, ${durationTwinkle}s;
             animation-delay: ${delayMovement}s, ${delayTwinkle}s;
         `;
@@ -130,11 +141,9 @@ function generateAnimatedStars() {
     }
 }
 
-// Define a animação 'twinkle' (Brilho das estrelas) globalmente (para o CSS)
+// Estilo auxiliar
 const styleSheet = document.createElement('style');
-styleSheet.innerHTML = `
-    .text-green-500 { color: #10b981; } 
-`;
+styleSheet.innerHTML = `.text-green-500 { color: #10b981; }`;
 document.head.appendChild(styleSheet);
 
 

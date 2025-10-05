@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>ACESSO BLOQUEADO - YouTube</title>
-  <link rel="stylesheet" href="style.css"> 
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -19,7 +19,7 @@
         <div class="icon-circle">
           <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L5.636 5.636"/>
+                  d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636"/>
           </svg>
         </div>
 
@@ -37,9 +37,8 @@
         <p class="text-gray-400">Este site está temporariamente bloqueado.</p>
         <p class="text-gray-100">
           <strong>
-            Para continuar, Acesse o Youtube no modo anônimo,
-            na barra de 3 pontinhos, exibirá uma barra lateral,
-            encontre a opção "Nova aba anônima" e clique nessa opção.
+            Para continuar, Acesse o Youtube no modo anônimo, na barra de 3 pontinhos, exibirá uma
+            barra lateral, encontre a opção "Nova aba anônima" e clique nessa opção.
           </strong>
         </p>
         <p class="text-sm text-gray-400 mt-2">Digite a senha para continuar.</p>
@@ -47,22 +46,14 @@
 
       <form id="block-form" class="space-y-4">
         <div id="password-group">
-          <label for="password" class="block text-sm font-medium text-gray-300 mb-2">
-            Senha de Acesso
-          </label>
-          <input
-            type="password"
-            id="password"
-            class="input-style"
-            placeholder="Digite a senha..."
-            required
-          />
+          <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Senha de Acesso</label>
+          <input type="password" id="password" class="input-style" placeholder="Digite a senha..." required />
         </div>
 
         <div id="error-message-container"></div>
 
-        <!-- Botão mágico completo -->
-        <button type="submit" id="submit-button"
+        <!-- Botão mágico de prosseguir -->
+        <button type="submit"
           class="relative overflow-hidden w-full px-8 py-4 rounded-full font-extrabold text-xl text-white
                  bg-gradient-to-br from-purple-600 to-blue-600
                  hover:from-purple-700 hover:to-blue-700
@@ -70,26 +61,17 @@
                  transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl transform hover:scale-105">
           <span class="relative z-10">Desbloquear Acesso</span>
 
-          <div class="absolute rounded-full pointer-events-none filter blur-sm w-8 h-8 bg-purple-400/50"
-               style="top:0;left:0;animation:bubble-float-1 10s 0s ease-in-out infinite"></div>
-          <div class="absolute rounded-full pointer-events-none filter blur-sm w-6 h-6 bg-blue-400/50"
-               style="top:0;left:0;animation:bubble-float-2 12s 2s ease-in-out infinite"></div>
-          <div class="absolute rounded-full pointer-events-none filter blur-sm w-10 h-10 bg-purple-300/50"
-               style="top:0;left:0;animation:bubble-float-3 15s 4s ease-in-out infinite"></div>
-          <div class="absolute rounded-full pointer-events-none filter blur-sm w-7 h-7 bg-blue-300/50"
-               style="top:0;left:0;animation:bubble-float-1 11s 6s ease-in-out infinite"></div>
-          <div class="absolute rounded-full pointer-events-none filter blur-sm w-9 h-9 bg-purple-500/50"
-               style="top:0;left:0;animation:bubble-float-2 13s 8s ease-in-out infinite"></div>
-          <div class="absolute rounded-full pointer-events-none filter blur-sm w-5 h-5 bg-blue-500/50"
-               style="top:0;left:0;animation:bubble-float-3 14s 1s ease-in-out infinite"></div>
-          <div class="absolute rounded-full pointer-events-none filter blur-sm w-8 h-8 bg-purple-400/50"
-               style="top:0;left:0;animation:bubble-float-1 10s 3s ease-in-out infinite"></div>
-          <div class="absolute rounded-full pointer-events-none filter blur-sm w-6 h-6 bg-blue-400/50"
-               style="top:0;left:0;animation:bubble-float-2 12s 5s ease-in-out infinite"></div>
-          <div class="absolute rounded-full pointer-events-none filter blur-sm w-11 h-11 bg-purple-300/50"
-               style="top:0;left:0;animation:bubble-float-3 16s 7s ease-in-out infinite"></div>
-          <div class="absolute rounded-full pointer-events-none filter blur-sm w-7 h-7 bg-blue-300/50"
-               style="top:0;left:0;animation:bubble-float-1 11s 9s ease-in-out infinite"></div>
+          <!-- 10 bolhas animadas -->
+          <div class="absolute rounded-full pointer-events-none filter blur-sm w-8 h-8 bg-purple-400/50" style="top:0;left:0;animation:bubble-float-1 10s 0s ease-in-out infinite"></div>
+          <div class="absolute rounded-full pointer-events-none filter blur-sm w-6 h-6 bg-blue-400/50" style="top:0;left:0;animation:bubble-float-2 12s 2s ease-in-out infinite"></div>
+          <div class="absolute rounded-full pointer-events-none filter blur-sm w-10 h-10 bg-purple-300/50" style="top:0;left:0;animation:bubble-float-3 15s 4s ease-in-out infinite"></div>
+          <div class="absolute rounded-full pointer-events-none filter blur-sm w-7 h-7 bg-blue-300/50"  style="top:0;left:0;animation:bubble-float-1 11s 6s ease-in-out infinite"></div>
+          <div class="absolute rounded-full pointer-events-none filter blur-sm w-9 h-9 bg-purple-500/50" style="top:0;left:0;animation:bubble-float-2 13s 8s ease-in-out infinite"></div>
+          <div class="absolute rounded-full pointer-events-none filter blur-sm w-5 h-5 bg-blue-500/50"   style="top:0;left:0;animation:bubble-float-3 14s 1s ease-in-out infinite"></div>
+          <div class="absolute rounded-full pointer-events-none filter blur-sm w-8 h-8 bg-purple-400/50" style="top:0;left:0;animation:bubble-float-1 10s 3s ease-in-out infinite"></div>
+          <div class="absolute rounded-full pointer-events-none filter blur-sm w-6 h-6 bg-blue-400/50"   style="top:0;left:0;animation:bubble-float-2 12s 5s ease-in-out infinite"></div>
+          <div class="absolute rounded-full pointer-events-none filter blur-sm w-11 h-11 bg-purple-300/50"style="top:0;left:0;animation:bubble-float-3 16s 7s ease-in-out infinite"></div>
+          <div class="absolute rounded-full pointer-events-none filter blur-sm w-7 h-7 bg-blue-300/50"  style="top:0;left:0;animation:bubble-float-1 11s 9s ease-in-out infinite"></div>
         </button>
       </form>
 

@@ -44,23 +44,22 @@ setInterval(updateTimeDisplay, 5000);
 // -----------------------------------------------------
 
 function generateAnimatedStars() {
-    // Procura o contêiner no momento da execução para garantir que foi carregado
     const currentStarsContainer = document.getElementById('stars-container');
 
     if (!currentStarsContainer) {
         console.warn("Contêiner de estrelas não encontrado. Verifique o ID no HTML.");
         return; 
     }
-    currentStarsContainer.innerHTML = ''; // Limpa as estrelas antigas
+    currentStarsContainer.innerHTML = ''; 
     const starCount = 150; 
     
     for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.className = 'star';
 
-        const size = Math.random() * 2 + 1; // Tamanho de 1px a 3px
-        const x = Math.random() * 100; // Posição X aleatória (0 a 100vw)
-        const y = Math.random() * 100; // Posição Y aleatória (0 a 100vh)
+        const size = Math.random() * 2 + 1; 
+        const x = Math.random() * 100; 
+        const y = Math.random() * 100; 
 
         // Variáveis de Movimento (duração entre 20s e 50s)
         const dx = (Math.random() - 0.5) * 50; 
@@ -68,7 +67,7 @@ function generateAnimatedStars() {
         const durationMovement = Math.random() * 30 + 20; 
         const delayMovement = Math.random() * 10; 
 
-        // VARIÁVEIS DE BRILHO CORRIGIDAS: Duração entre 5s e 15s (evita que parem de brilhar)
+        // VARIÁVEIS DE BRILHO CORRIGIDAS: Duração entre 5s e 15s (mais tempo para brilhar)
         const durationTwinkle = Math.random() * 10 + 5; 
         const delayTwinkle = Math.random() * 5; 
 
@@ -96,7 +95,7 @@ document.head.appendChild(styleSheet);
 // LÓGICA DE DESBLOQUEIO E INICIALIZAÇÃO (DOMContentLoaded)
 // -----------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-    // Lógica de Desbloqueio 
+    // Lógica de Desbloqueio (Sem alterações)
     const form = document.getElementById('block-form');
     const passwordInput = document.getElementById('password');
     const errorContainer = document.getElementById('error-message-container');
@@ -159,6 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Garante que o gerador recrie estrelas em mudanças de tamanho de tela.
     window.addEventListener('resize', generateAnimatedStars);
     
-    // 3. Garante que o gerador recrie estrelas a cada 20 segundos para animação contínua.
-    setInterval(generateAnimatedStars, 20000); 
+    // 3. Intervalo de Regeneração Corrigido (60 segundos) para não cortar a animação de 50s.
+    setInterval(generateAnimatedStars, 60000); 
 });

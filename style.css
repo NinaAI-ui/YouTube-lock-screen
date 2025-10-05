@@ -1,5 +1,5 @@
 /* ----------------------------------------------------- */
-/* ESTILOS GERAIS E FUNDO PADRÃO */
+/* ESTILOS GERAIS: AGORA SÓ HÁ O MODO NOITE */
 /* ----------------------------------------------------- */
 body {
     margin: 0;
@@ -7,31 +7,11 @@ body {
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     overflow: hidden; 
     transition: background-color 1s ease, background-image 1s ease; /* Transição suave */
-    background-color: #1a1a1a; /* Fundo padrão */
+    /* NOVO: Fundo e cor do texto da Noite aplicados DIRETAMENTE ao body */
+    background: linear-gradient(to bottom, #1a2a4c, #0d1e3a, #0a0a0a); 
+    color: #e0e0e0; /* Cor do texto padrão (Claro) */
 }
 
-/* ----------------------------------------------------- */
-/* ESTILOS DE FUNDO DINÂMICOS */
-/* ----------------------------------------------------- */
-
-/* 🌙 NOITE - NOVO FUNDO COM ESTRELAS/LUA */
-.background-night {
-    /* Degradê noturno AUMENTADO O BRILHO (cores mais vibrantes) */
-    background: linear-gradient(to bottom, #1a2a4c, #0d1e3a, #0a0a0a) !important; 
-    color: #e0e0e0 !important; /* FORÇA TEXTO CLARO */
-}
-
-/* 🌅 AMANHECER (05:00 - 10:59) */
-.background-morning {
-    background: linear-gradient(to top, #fcd34d, #fda47e, #475569) !important; 
-    color: #333 !important; /* FORÇA TEXTO ESCURO */
-}
-
-/* ☀️ DIA (11:00 - 17:59) */
-.background-day {
-    background: linear-gradient(to top, #94a3b8, #60a5fa, #3b82f6) !important;
-    color: #333 !important; /* FORÇA TEXTO ESCURO */
-}
 
 /* ----------------------------------------------------- */
 /* ESTILOS DO CÉU NOTURNO (LUA E ESTRELAS) MAIS BRILHANTES/ANIMADOS */
@@ -57,9 +37,9 @@ body {
     background-color: #fce883; /* Amarelo da lua MAIS BRILHANTE */
     border-radius: 50%;
     /* Sombra da lua AUMENTADA E MAIS BRILHANTE */
-    box-shadow: 0 0 30px rgba(255, 255, 200, 0.8), /* Glow principal */
-                0 0 60px rgba(255, 255, 200, 0.6), /* Glow secundário */
-                0 0 100px rgba(255, 255, 200, 0.4); /* Glow distante */
+    box-shadow: 0 0 30px rgba(255, 255, 200, 0.8), 
+                0 0 60px rgba(255, 255, 200, 0.6), 
+                0 0 100px rgba(255, 255, 200, 0.4); 
     transition: opacity 1s ease;
     animation: moonPulse 4s ease-in-out infinite alternate; /* Animação de pulsar da lua */
 }
@@ -69,7 +49,7 @@ body {
     100% { transform: scale(1.02); opacity: 1; }
 }
 
-/* Estilo para cada estrela (agora gerada pelo JS para animação) */
+/* Estilo para cada estrela animada (Gerada pelo JS) */
 .star {
     position: absolute;
     background-color: #ffffff; /* Cor branca */
@@ -83,29 +63,23 @@ body {
     animation-iteration-count: infinite, infinite alternate;
 }
 
-/* Animação para o movimento das estrelas (definida pelo JS, apenas o nome aqui) */
+/* Animação para o movimento das estrelas (usa variáveis injetadas pelo JS) */
 @keyframes starMovement {
     from { transform: translate(0, 0); }
-    to { transform: translate(var(--dx), var(--dy)); } /* Valores injetados pelo JS */
+    to { transform: translate(var(--dx), var(--dy)); } 
 }
 
-/* Animação de brilho para as estrelas (pulsar) */
+/* Animação de brilho para as estrelas (pulsar/piscar) */
 @keyframes starTwinkle {
     0% { opacity: 0; transform: scale(0.8); }
     50% { opacity: 1; transform: scale(1); }
     100% { opacity: 0; transform: scale(0.8); }
 }
 
-/* O JavaScript vai manipular a exibição deste container */
-.hidden-sky {
-    display: none !important;
-}
-
 /* ----------------------------------------------------- */
-/* ESTILOS DO CONTEÚDO (CARD) */
+/* ESTILOS DO CONTEÚDO (CARD) - MANTIDOS IGUAIS */
 /* ----------------------------------------------------- */
 
-/* Container Principal do Bloqueio (Acima do fundo dinâmico) */
 .main-container {
     min-height: 100vh;
     display: flex;
@@ -116,7 +90,6 @@ body {
     z-index: 5; 
 }
 
-/* Cartão de Bloqueio (O CARD ESCURO) */
 .block-card {
     background-color: rgba(30, 30, 30, 0.95);
     border-radius: 0.75rem; 

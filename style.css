@@ -1,12 +1,12 @@
 /* ----------------------------------------------------- */
-/* ESTILOS GERAIS – CÉU FIXO E TRANSIÇÕES SUAVES */
+/* ESTILOS GERAIS – FUNDO NOTURNO */
 /* ----------------------------------------------------- */
 body {
     margin: 0;
     padding: 0;
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-    overflow: hidden; 
-    transition: background-color 1s ease, background-image 1s ease; 
+    overflow: hidden;
+    transition: background-color 1s ease, background-image 1s ease;
     background: linear-gradient(to bottom, #1a2a4c, #0d1e3a, #0a0a0a);
     color: #e0e0e0;
 }
@@ -20,8 +20,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1; 
-    pointer-events: none; 
+    z-index: 1;
+    pointer-events: none;
     transition: opacity 1s ease;
 }
 
@@ -30,41 +30,40 @@ body {
     position: absolute;
     top: 15vh;
     right: 15vw;
-    width: 6rem; 
+    width: 6rem;
     height: 6rem;
-    background-color: #fce883; 
+    background-color: #fce883;
     border-radius: 50%;
-    box-shadow: 
-        0 0 30px rgba(255, 255, 200, 0.8), 
-        0 0 60px rgba(255, 255, 200, 0.6), 
-        0 0 100px rgba(255, 255, 200, 0.4); 
+    box-shadow:
+        0 0 30px rgba(255, 255, 200, 0.8),
+        0 0 60px rgba(255, 255, 200, 0.6),
+        0 0 100px rgba(255, 255, 200, 0.4);
     transition: opacity 1s ease;
-    animation: moonPulse 4s ease-in-out infinite alternate; 
+    animation: moonPulse 4s ease-in-out infinite alternate;
 }
 
 @keyframes moonPulse {
-    0% { transform: scale(1); opacity: 0.9; }
-    100% { transform: scale(1.02); opacity: 1; }
+    0% { transform: scale(1);   opacity: 0.9; }
+    100%{ transform: scale(1.02); opacity: 1; }
 }
 
 /* ----------------------------------------------------- */
-/* ESTILO DAS ESTRELAS GERADAS PELO JS */
+/* ESTRELAS ANIMADAS (GERADAS PELO JS) */
 /* ----------------------------------------------------- */
 .star {
     position: absolute;
-    background-color: #ffffff; 
+    background-color: #ffffff;
     border-radius: 50%;
-    box-shadow: 
-        0 0 4px rgba(255, 255, 255, 0.8),
-        0 0 8px rgba(255, 255, 255, 0.4);
-    opacity: 0; 
-    animation-name: starMovement, starTwinkle; 
+    box-shadow:
+        0 0 4px rgba(255,255,255,0.8),
+        0 0 8px rgba(255,255,255,0.4);
+    opacity: 0;
+    animation-name: starMovement, starTwinkle;
     animation-timing-function: linear, ease-in-out;
-    
-    /* infinito e contínuo — sem alternate para não inverter e causar “reset” */
-    animation-iteration-count: infinite, infinite;
 
-    /* durações e atrasos definidos via variáveis CSS */
+    /* movimento linear infinito, brilho pulsante alternando */
+    animation-iteration-count: infinite, infinite alternate;
+
     animation-duration: var(--movement-duration, 40s), var(--twinkle-duration, 10s);
     animation-delay: var(--movement-delay, 0s), var(--twinkle-delay, 0s);
 }
@@ -75,17 +74,17 @@ body {
     to { transform: translate(var(--dx), var(--dy)); }
 }
 
-/* BRILHO DAS ESTRELAS */
+/* BRILHO DAS ESTRELAS – nunca desaparece totalmente */
 @keyframes starTwinkle {
-    0%   { opacity: 0; transform: scale(0.8); }
-    25%  { opacity: 0.5; transform: scale(0.9); }
-    50%  { opacity: 1; transform: scale(1); }
-    75%  { opacity: 0.5; transform: scale(0.9); }
-    100% { opacity: 0; transform: scale(0.8); }
+    0%   { opacity: 0.3; transform: scale(0.85); }
+    25%  { opacity: 0.6; transform: scale(0.9); }
+    50%  { opacity: 1;   transform: scale(1); }
+    75%  { opacity: 0.6; transform: scale(0.9); }
+    100% { opacity: 0.3; transform: scale(0.85); }
 }
 
 /* ----------------------------------------------------- */
-/* CONTEÚDO PRINCIPAL (CARD/BLOQUEIO) */
+/* CONTEÚDO PRINCIPAL (CARD DE BLOQUEIO) */
 /* ----------------------------------------------------- */
 .main-container {
     min-height: 100vh;
@@ -94,12 +93,12 @@ body {
     justify-content: center;
     padding: 1rem;
     position: relative;
-    z-index: 5; 
+    z-index: 5;
 }
 
 .block-card {
     background-color: rgba(30, 30, 30, 0.95);
-    border-radius: 0.75rem; 
+    border-radius: 0.75rem;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     padding: 2.5rem;
     max-width: 28rem;
@@ -108,13 +107,13 @@ body {
 }
 
 .block-card * {
-    color: #e0e0e0; 
+    color: #e0e0e0;
 }
 
 /* ----------------------------------------------------- */
-/* CORES E TIPOGRAFIA */
+/* CORE SET DE CORES E TIPOGRAFIA */
 /* ----------------------------------------------------- */
-.text-red-600 { color: #ff0000; } 
+.text-red-600 { color: #ff0000; }
 .text-white { color: #ffffff; }
 .text-gray-300 { color: #d1d5db; }
 .text-gray-400 { color: #9ca3af; }
@@ -125,10 +124,10 @@ body {
 .font-semibold { font-weight: 600; }
 
 /* ----------------------------------------------------- */
-/* ÍCONES E ELEMENTOS DE INTERFACE */
+/* ÍCONES E CABEÇALHOS */
 /* ----------------------------------------------------- */
 .icon-circle {
-    width: 5rem; 
+    width: 5rem;
     height: 5rem;
     background-color: #ff0000;
     border-radius: 9999px;
@@ -146,23 +145,23 @@ body {
 }
 
 .icon-youtube-box {
-    width: 2.5rem; 
-    height: 2.5rem; 
-    background-color: #ff0000; 
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #ff0000;
     border-radius: 0.25rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-right: 0.25rem; 
-    overflow: hidden; 
-    flex-shrink: 0; 
+    margin-right: 0.25rem;
+    overflow: hidden;
+    flex-shrink: 0;
     line-height: 0;
-    vertical-align: middle; 
+    vertical-align: middle;
 }
 
 .icon-youtube-box svg {
-    width: 1.5rem; 
-    height: 1.5rem; 
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 /* ----------------------------------------------------- */
@@ -178,7 +177,7 @@ body {
     outline: none;
     transition: all 0.2s;
     box-sizing: border-box;
-    box-shadow: inset 0 0 0 1px #4a4a4a; 
+    box-shadow: inset 0 0 0 1px #4a4a4a;
 }
 
 .input-style:focus {
@@ -188,7 +187,7 @@ body {
 /* BOTÃO */
 .button-submit {
     width: 100%;
-    background-color: #3b82f6; 
+    background-color: #3b82f6;
     color: white;
     font-weight: 600;
     padding: 0.75rem 1rem;
@@ -196,7 +195,7 @@ body {
     cursor: pointer;
     border: none;
     transition: background-color 0.2s;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
 .button-submit:hover {

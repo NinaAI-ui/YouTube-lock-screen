@@ -156,3 +156,11 @@ document.head.appendChild(styleSheet);
 // Inicializa as estrelas animadas no carregamento
 document.addEventListener('DOMContentLoaded', generateAnimatedStars);
 window.addEventListener('resize', generateAnimatedStars);
+
+// -----------------------------------------------------
+// FUNÇÃO PARA GARANTIR ANIMAÇÃO CONTÍNUA
+// -----------------------------------------------------
+
+// Recria todas as estrelas a cada 60 segundos (1 minuto).
+// Isso resolve o problema de estrelas que param de se mover ou brilhar após um tempo.
+setInterval(generateAnimatedStars, 60000); 
